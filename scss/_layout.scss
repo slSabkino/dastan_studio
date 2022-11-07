@@ -1,0 +1,82 @@
+.page {
+	align-items: center;
+	background-color: $color-background;
+	color: $color-primary;
+	display: flex;
+	fill: $color-primary;
+	flex-direction: column;
+	font-family: $font-homa;
+	font-size: 1rem;
+	height: max-content;
+	justify-content: space-between;
+	min-height: 100vh;
+	width: 100%;
+	z-index: 0;
+
+	* {
+		display: flex;
+	}
+}
+
+.main {
+	flex: 1;
+	gap: 0.6rem;
+	height: max-content;
+	margin-bottom: 3.2rem;
+	margin-top: 3.6rem;
+	max-width: $max-width;
+	width: 100%;
+	height: max-content;
+	z-index: 0;
+	padding: 0.4rem;
+}
+
+.header_wrapper {
+	border-bottom: 1px solid $color-border;
+	top: 0;
+	height: 3.6rem;
+}
+
+.footer_wrapper {
+	border-top: 1px solid $color-border;
+	bottom: 0;
+	height: 3.2rem;
+}
+
+.header_wrapper,
+.footer_wrapper {
+	background-color: $color-highlight;
+	width: 100%;
+	flex-direction: row;
+	position: fixed;
+	z-index: 1;
+	-webkit-transform: translateZ(0);
+}
+
+.header,
+.footer {
+	max-width: $tablet;
+	background-color: $color-highlight;
+	flex: 1;
+	padding: $gap;
+	justify-content: space-around;
+	gap: $gap;
+	height: max-content;
+}
+
+.footer_link {
+	cursor: pointer;
+	user-select: none;
+	background-color: brown;
+	flex: 1;
+	a {
+		flex: 1;
+	}
+}
+
+.ind {
+	width: 100%;
+	flex: 1;
+	min-height: 40rem;
+	background-color: $color-green;
+}

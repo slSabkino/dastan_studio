@@ -1,0 +1,123 @@
+$color-primary: rgb(0, 15, 50);
+$color-secondary: rgb(210, 0, 90);
+$color-highlight: rgb(185, 205, 255);
+$color-green: rgb(160, 180, 10);
+$color-border: rgb(20, 80, 180);
+$color-background: rgb(255, 235, 215);
+
+$max-width: 1600px;
+$tablet: 910px;
+$phone: 660px;
+$gap: 0.6rem;
+
+$font-homa: homa, sans-serif;
+$font-esfahan: esfahan, sans-serif;
+
+@font-face {
+	font-family: homa;
+	// src: url(/homa.woff);
+	src: url(/homa.woff);
+}
+
+@font-face {
+	font-family: esfahan;
+	// src: url(/esfahan.woff);
+	src: url(/esfahan.woff);
+}
+
+* {
+	// position: inherit;
+	align-items: center;
+	background-color: unset;
+	border-width: 0;
+	box-sizing: border-box;
+	color: inherit;
+	cursor: inherit;
+	direction: inherit;
+	fill: inherit;
+	flex-direction: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	gap: inherit;
+	justify-content: center;
+	list-style-type: none;
+	margin: 0;
+	min-width: 1rem;
+	outline: none;
+	padding: 0;
+	scrollbar-color: inherit;
+	scrollbar-gutter: inherit;
+	scrollbar-width: inherit;
+	text-decoration: inherit;
+	user-select: inherit;
+
+	&::selection {
+		// color: $color-secondary;
+		background: $color-highlight;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&::-webkit-scrollbar {
+		width: inherit;
+		background-color: inherit;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: inherit;
+	}
+
+	-webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+	font-family: $font-esfahan;
+}
+
+body {
+	// direction: rtl;
+	// overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+		width: 0.4rem;
+		background-color: $color-secondary;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: $color-border;
+	}
+}
+
+//scrollbars
+:root {
+	scrollbar-color: $color-border $color-secondary;
+	scrollbar-gutter: $color-border;
+	scrollbar-width: thin;
+}
+
+//input buttons hide
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+@media only screen and (max-width: $tablet) {
+	:root {
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+	}
+}
