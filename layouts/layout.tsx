@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-head-element */
-// import "../public/main.css";
+
+import Head from "next/head";
+import FooterMain from "./FooterMain";
+import HeaderMain from "./HeaderMain";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html>
-			<head>
+		<div className="page">
+			<Head>
 				<meta charSet="UTF-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 				<meta
@@ -13,14 +16,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#030521" />
-				<link rel="stylesheet" href="./main.css" />
-				<title>دستان</title>
-			</head>
-			<body>
-				<div className="page">
-					<div className="main">{children}</div>
-				</div>
-			</body>
-		</html>
+			</Head>
+			<HeaderMain
+				location={{
+					base: "home",
+					category: "categoty",
+					subCategory: "subCat",
+				}}
+			/>
+			<div className="base_layout">{children}</div>
+			<FooterMain />
+		</div>
 	);
 }

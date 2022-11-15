@@ -112,43 +112,39 @@ input[type=number] {
 }
 .page * {
   display: flex;
-}
-
-.main {
   flex: 1;
-  gap: 0.6rem;
+  width: 100%;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  margin-bottom: 3.2rem;
-  margin-top: 3.6rem;
+}
+
+.base_layout {
+  gap: 0.6rem;
   max-width: 1600px;
-  width: 100%;
-  height: max-content;
   z-index: 0;
-  padding: 0.4rem;
+  padding: 1rem;
 }
 
 .header_wrapper {
   border-bottom: 1px solid rgb(20, 80, 180);
   top: 0;
-  height: 3.6rem;
 }
 
 .footer_wrapper {
   border-top: 1px solid rgb(20, 80, 180);
   bottom: 0;
-  height: 3.2rem;
 }
 
 .header_wrapper,
 .footer_wrapper {
+  flex-grow: 0;
   background-color: rgb(185, 205, 255);
   width: 100%;
   flex-direction: row;
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   z-index: 1;
-  -webkit-transform: translateZ(0);
 }
 
 .header,
@@ -162,6 +158,23 @@ input[type=number] {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
+}
+
+.btn {
+  min-width: 5rem;
+  min-height: 3rem;
+  background-color: rgb(0, 15, 50);
+  color: rgb(210, 0, 90);
+  fill: rgb(210, 0, 90);
+  cursor: pointer;
+  border: 1px solid rgb(210, 0, 90);
+  border-radius: 0.6rem;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn:active {
+  opacity: 0.6;
 }
 
 .footer_link {
@@ -182,4 +195,11 @@ input[type=number] {
   flex: 1;
   min-height: 40rem;
   background-color: rgb(160, 180, 10);
+}
+
+.page_home {
+  background-color: #8a8a5a;
+  padding: 1rem;
+  width: 100%;
+  min-height: 100%;
 }/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//level one
+
+model province {
+  id    Int    @id @default(autoincrement()) @db.SmallInt
+  title String @db.VarChar(30)
+  city  city[]
+}
+
+model city {
+  id          Int      @id @default(autoincrement()) @db.SmallInt
+  title       String   @db.VarChar(30)
+  province    province @relation(fields: [province_id], references: [id])
+  province_id Int      @db.SmallInt
+  user        user[]
+}
+
+//level two
+
+model user {
+  id               Int             @id @default(autoincrement())
+  first_name       String          @db.VarChar(30)
+  last_name        String          @db.VarChar(30)
+  username         String          @db.VarChar(30)
+  phone            Int             @db.SmallInt
+  permission_level Int             @default(0) @db.SmallInt
+  RegisterDate     DateTime        @db.Date
+  email            String?         @db.VarChar(70)
+  city_id          Int?            @db.SmallInt
+  city             city?           @relation(fields: [city_id], references: [id])
+  interests        subCategory[]
+  course           course[]
+  lesson           lesson[]
+  post             post[]
+  news             news[]
+  admin_message    admin_message[]
+  courseComment    courseComment[]
+  postComment      postComment[]
+  newsComment      newsComment[]
+  lessonComment    lessonComment[]
+  postReport       postReport[]
+}
+
+model category {
+  id          Int           @id @default(autoincrement()) @db.SmallInt
+  title       String        @db.VarChar(30)
+  subCategory subCategory[]
+}
+
+model subCategory {
+  id          Int      @id @default(autoincrement()) @db.SmallInt
+  title       String   @db.VarChar(30)
+  category_id Int      @db.SmallInt
+  category    category @relation(fields: [category_id], references: [id])
+  interests   user[]
+  course      course[]
+  post        post[]
+  news        news[]
+}
+
+model keyword {
+  id     Int      @id @default(autoincrement())
+  title  String   @db.VarChar(30)
+  course course[]
+  lesson lesson[]
+  post   post[]
+  news   news[]
+}
+
+//level three
+model course {
+  id           Int             @id @default(autoincrement()) @db.SmallInt
+  title        String          @db.VarChar(30)
+  description  String
+  banner_url   String
+  author_id    Int
+  category_id  Int             @db.SmallInt
+  is_active    Boolean         @default(false)
+  creationDate DateTime        @default(now()) @db.Date
+  updateDate   DateTime?       @db.Date
+  price        Int?
+  author       user            @relation(fields: [author_id], references: [id])
+  category     subCategory     @relation(fields: [category_id], references: [id])
+  keywords     keyword[]
+  comments     courseComment[]
+}
+
+model lesson {
+  id            Int             @id @default(autoincrement())
+  title         String          @db.VarChar(30)
+  description   String
+  banner_url    String
+  video_url     String
+  author_id     Int
+  is_active     Boolean         @default(false)
+  creationDate  DateTime        @default(now()) @db.Date
+  updateDate    DateTime?       @db.Date
+  author        user            @relation(fields: [author_id], references: [id])
+  keywords      keyword[]
+  lessonComment lessonComment[]
+}
+
+model post {
+  id           Int           @id @default(autoincrement())
+  title        String        @db.VarChar(30)
+  description  String
+  banner_url   String
+  author_id    Int
+  category_id  Int           @db.SmallInt
+  is_active    Boolean       @default(false)
+  creationDate DateTime      @default(now()) @db.Date
+  updateDate   DateTime?     @db.Date
+  author       user          @relation(fields: [author_id], references: [id])
+  category     subCategory   @relation(fields: [category_id], references: [id])
+  keywords     keyword[]
+  comments     postComment[]
+  reports      postReport[]
+}
+
+model news {
+  id           Int           @id @default(autoincrement())
+  title        String        @db.VarChar(30)
+  description  String
+  banner_url   String
+  author_id    Int
+  category_id  Int           @db.SmallInt
+  is_active    Boolean       @default(false)
+  creationDate DateTime      @default(now()) @db.Date
+  updateDate   DateTime?     @db.Date
+  category     subCategory   @relation(fields: [category_id], references: [id])
+  author       user          @relation(fields: [author_id], references: [id])
+  keywords     keyword[]
+  comments     newsComment[]
+}
+
+model admin_message {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(30)
+  description  String
+  user_id      Int
+  is_readed    Boolean  @default(false)
+  creationDate DateTime @default(now()) @db.Date
+  user         user?    @relation(fields: [user_id], references: [id])
+}
+
+//level four
+
+model courseComment {
+  id           Int      @id @default(autoincrement())
+  description  String
+  course_id    Int      @db.SmallInt
+  user_id      Int
+  creationDate DateTime @default(now()) @db.Date
+  course       course   @relation(fields: [course_id], references: [id])
+  user         user     @relation(fields: [user_id], references: [id])
+}
+
+model lessonComment {
+  id           Int      @id @default(autoincrement())
+  description  String
+  lesson_id    Int
+  user_id      Int
+  creationDate DateTime @default(now()) @db.Date
+  lesson       lesson   @relation(fields: [lesson_id], references: [id])
+  user         user     @relation(fields: [user_id], references: [id])
+}
+
+model postComment {
+  id           Int      @id @default(autoincrement())
+  description  String
+  post_id      Int
+  user_id      Int
+  creationDate DateTime @default(now()) @db.Date
+  post         post     @relation(fields: [post_id], references: [id])
+  user         user     @relation(fields: [user_id], references: [id])
+}
+
+model newsComment {
+  id           Int      @id @default(autoincrement())
+  description  String
+  news_id      Int
+  user_id      Int
+  creationDate DateTime @default(now()) @db.Date
+  news         news     @relation(fields: [news_id], references: [id])
+  user         user     @relation(fields: [user_id], references: [id])
+}
+
+model postReport {
+  id           Int      @id @default(autoincrement())
+  description  String
+  post_id      Int
+  user_id      Int
+  creationDate DateTime @default(now()) @db.Date
+  post         post     @relation(fields: [post_id], references: [id])
+  user         user     @relation(fields: [user_id], references: [id])
+}

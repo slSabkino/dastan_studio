@@ -15,18 +15,30 @@
 		"jsx": "preserve",
 		// "jsx": "react-jsx",
 		"incremental": true,
+		// "sourceMap": true,
 		"plugins": [
 			{
 				"name": "next"
 			}
-		]
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@public/*": ["public/*"],
+			"@components/*": ["components/*"],
+			"@layouts/*": ["layouts/*"],
+			"@utilities/*": ["utilities/*"],
+			"@propsTypes/*": ["props_types/*"],
+			"@providers/*": ["providers/*"]
+		}
 	},
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"app/layout.tsx"
+		"app/layout.tsx",
+		"pages/_app.js",
+		"layouts/HeaderMain.jsx"
 	],
 	"exclude": ["node_modules"]
 }
