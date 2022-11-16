@@ -33,9 +33,9 @@ model user {
   first_name       String          @db.VarChar(30)
   last_name        String          @db.VarChar(30)
   username         String          @db.VarChar(30)
-  phone            Int             @db.SmallInt
+  phone            String          @db.VarChar(10)
   permission_level Int             @default(0) @db.SmallInt
-  RegisterDate     DateTime        @db.Date
+  RegisterDate     DateTime        @default(now()) @db.Date
   email            String?         @db.VarChar(70)
   city_id          Int?            @db.SmallInt
   city             city?           @relation(fields: [city_id], references: [id])

@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
 
-export const authOptions = {
+export default NextAuth({
 	providers: [
 		CredentialsProvider({
 			name: "account",
@@ -44,9 +43,8 @@ export const authOptions = {
 			},
 		}),
 	],
-};
-
-export default NextAuth(authOptions);
+	pages: { signIn: "/login" },
+});
 
 const asd = {
 	credentials: {

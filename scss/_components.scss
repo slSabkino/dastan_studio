@@ -1,12 +1,17 @@
+.border {
+	border: 1px solid $color-primary;
+	border-radius: $gap;
+}
+
 .btn {
+	@extend .border;
 	min-width: 5rem;
 	min-height: 3rem;
-	background-color: $color-primary;
+	max-height: 3rem;
+	width: max-content;
 	color: $color-secondary;
 	fill: $color-secondary;
 	cursor: pointer;
-	border: 1px solid $color-secondary;
-	border-radius: $gap;
 
 	&:hover {
 		opacity: 0.8;
@@ -15,11 +20,51 @@
 		opacity: 0.6;
 	}
 }
+.input {
+	@extend .border;
+	min-height: 3rem;
+	max-height: 3rem;
+	padding: 0.6rem;
+	background-color: white;
+}
 
+.bold {
+	font-weight: bold;
+	font-size: 1.2rem;
+}
+
+.link {
+	color: $color-highlight;
+	fill: $color-highlight;
+	cursor: pointer;
+	flex-grow: 0;
+	max-height: max-content;
+	max-width: max-content;
+}
+
+.label {
+	cursor: pointer;
+
+	flex-grow: 0;
+	max-height: max-content;
+	max-width: max-content;
+}
+
+.form {
+	// @extend .border;
+	// background-color: white;
+	padding: 1rem;
+	gap: 1rem;
+	max-width: 20rem;
+	max-height: max-content;
+	flex-grow: 0;
+}
+.form_row {
+	align-items: flex-start;
+}
 .footer_link {
 	cursor: pointer;
 	user-select: none;
-	background-color: brown;
 	flex: 1;
 	a {
 		flex: 1;
@@ -30,5 +75,5 @@
 	width: 100%;
 	flex: 1;
 	min-height: 40rem;
-	background-color: $color-green;
+	background-color: $color-primary;
 }
