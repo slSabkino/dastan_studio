@@ -19,37 +19,38 @@ model province {
 }
 
 model city {
-  id          Int      @id @default(autoincrement()) @db.SmallInt
-  title       String   @db.VarChar(30)
-  province    province @relation(fields: [province_id], references: [id])
-  province_id Int      @db.SmallInt
-  user        user[]
+  id         Int      @id @default(autoincrement()) @db.SmallInt
+  title      String   @db.VarChar(30)
+  province   province @relation(fields: [provinceId], references: [id])
+  provinceId Int      @db.SmallInt
+  user       user[]
 }
 
 //level two
 
 model user {
-  id               Int             @id @default(autoincrement())
-  first_name       String          @db.VarChar(30)
-  last_name        String          @db.VarChar(30)
-  username         String          @db.VarChar(30)
-  phone            String          @db.VarChar(10)
-  permission_level Int             @default(0) @db.SmallInt
-  RegisterDate     DateTime        @default(now()) @db.Date
-  email            String?         @db.VarChar(70)
-  city_id          Int?            @db.SmallInt
-  city             city?           @relation(fields: [city_id], references: [id])
-  interests        subCategory[]
-  course           course[]
-  lesson           lesson[]
-  post             post[]
-  news             news[]
-  admin_message    admin_message[]
-  courseComment    courseComment[]
-  postComment      postComment[]
-  newsComment      newsComment[]
-  lessonComment    lessonComment[]
-  postReport       postReport[]
+  id              Int             @id @default(autoincrement())
+  firstName       String          @db.VarChar(30)
+  lastName        String          @db.VarChar(30)
+  username        String          @unique @db.VarChar(30)
+  phone           String          @unique @db.VarChar(10)
+  email           String          @db.VarChar(70)
+  password        String          @db.VarChar(30)
+  permissionLevel Int             @default(0) @db.SmallInt
+  RegisterDate    DateTime        @default(now()) @db.Date
+  cityId          Int?            @db.SmallInt
+  city            city?           @relation(fields: [cityId], references: [id])
+  interests       subCategory[]
+  course          course[]
+  lesson          lesson[]
+  post            post[]
+  news            news[]
+  adminMessage    adminMessage[]
+  courseComment   courseComment[]
+  postComment     postComment[]
+  newsComment     newsComment[]
+  lessonComment   lessonComment[]
+  postReport      postReport[]
 }
 
 model category {
@@ -59,14 +60,14 @@ model category {
 }
 
 model subCategory {
-  id          Int      @id @default(autoincrement()) @db.SmallInt
-  title       String   @db.VarChar(30)
-  category_id Int      @db.SmallInt
-  category    category @relation(fields: [category_id], references: [id])
-  interests   user[]
-  course      course[]
-  post        post[]
-  news        news[]
+  id         Int      @id @default(autoincrement()) @db.SmallInt
+  title      String   @db.VarChar(30)
+  categoryId Int      @db.SmallInt
+  category   category @relation(fields: [categoryId], references: [id])
+  interests  user[]
+  course     course[]
+  post       post[]
+  news       news[]
 }
 
 model keyword {
@@ -83,15 +84,15 @@ model course {
   id           Int             @id @default(autoincrement()) @db.SmallInt
   title        String          @db.VarChar(30)
   description  String
-  banner_url   String
-  author_id    Int
-  category_id  Int             @db.SmallInt
-  is_active    Boolean         @default(false)
+  bannerUrl    String
+  authorId     Int
+  categoryId   Int             @db.SmallInt
+  isActive     Boolean         @default(false)
   creationDate DateTime        @default(now()) @db.Date
   updateDate   DateTime?       @db.Date
   price        Int?
-  author       user            @relation(fields: [author_id], references: [id])
-  category     subCategory     @relation(fields: [category_id], references: [id])
+  author       user            @relation(fields: [authorId], references: [id])
+  category     subCategory     @relation(fields: [categoryId], references: [id])
   keywords     keyword[]
   comments     courseComment[]
 }
@@ -100,13 +101,13 @@ model lesson {
   id            Int             @id @default(autoincrement())
   title         String          @db.VarChar(30)
   description   String
-  banner_url    String
-  video_url     String
-  author_id     Int
-  is_active     Boolean         @default(false)
+  bannerUrl     String
+  videoUrl      String
+  authorId      Int
+  isActive      Boolean         @default(false)
   creationDate  DateTime        @default(now()) @db.Date
   updateDate    DateTime?       @db.Date
-  author        user            @relation(fields: [author_id], references: [id])
+  author        user            @relation(fields: [authorId], references: [id])
   keywords      keyword[]
   lessonComment lessonComment[]
 }
@@ -115,14 +116,14 @@ model post {
   id           Int           @id @default(autoincrement())
   title        String        @db.VarChar(30)
   description  String
-  banner_url   String
-  author_id    Int
-  category_id  Int           @db.SmallInt
-  is_active    Boolean       @default(false)
+  bannerUrl    String
+  authorId     Int
+  categoryId   Int           @db.SmallInt
+  isActive     Boolean       @default(false)
   creationDate DateTime      @default(now()) @db.Date
   updateDate   DateTime?     @db.Date
-  author       user          @relation(fields: [author_id], references: [id])
-  category     subCategory   @relation(fields: [category_id], references: [id])
+  author       user          @relation(fields: [authorId], references: [id])
+  category     subCategory   @relation(fields: [categoryId], references: [id])
   keywords     keyword[]
   comments     postComment[]
   reports      postReport[]
@@ -132,26 +133,26 @@ model news {
   id           Int           @id @default(autoincrement())
   title        String        @db.VarChar(30)
   description  String
-  banner_url   String
-  author_id    Int
-  category_id  Int           @db.SmallInt
-  is_active    Boolean       @default(false)
+  bannerUrl    String
+  authorId     Int
+  categoryId   Int           @db.SmallInt
+  isActive     Boolean       @default(false)
   creationDate DateTime      @default(now()) @db.Date
   updateDate   DateTime?     @db.Date
-  category     subCategory   @relation(fields: [category_id], references: [id])
-  author       user          @relation(fields: [author_id], references: [id])
+  category     subCategory   @relation(fields: [categoryId], references: [id])
+  author       user          @relation(fields: [authorId], references: [id])
   keywords     keyword[]
   comments     newsComment[]
 }
 
-model admin_message {
+model adminMessage {
   id           Int      @id @default(autoincrement())
   title        String   @db.VarChar(30)
   description  String
-  user_id      Int
-  is_readed    Boolean  @default(false)
+  userId       Int
+  isReaded     Boolean  @default(false)
   creationDate DateTime @default(now()) @db.Date
-  user         user?    @relation(fields: [user_id], references: [id])
+  user         user?    @relation(fields: [userId], references: [id])
 }
 
 //level four
@@ -159,49 +160,49 @@ model admin_message {
 model courseComment {
   id           Int      @id @default(autoincrement())
   description  String
-  course_id    Int      @db.SmallInt
-  user_id      Int
+  courseId     Int      @db.SmallInt
+  userId       Int
   creationDate DateTime @default(now()) @db.Date
-  course       course   @relation(fields: [course_id], references: [id])
-  user         user     @relation(fields: [user_id], references: [id])
+  course       course   @relation(fields: [courseId], references: [id])
+  user         user     @relation(fields: [userId], references: [id])
 }
 
 model lessonComment {
   id           Int      @id @default(autoincrement())
   description  String
-  lesson_id    Int
-  user_id      Int
+  lessonId     Int
+  userId       Int
   creationDate DateTime @default(now()) @db.Date
-  lesson       lesson   @relation(fields: [lesson_id], references: [id])
-  user         user     @relation(fields: [user_id], references: [id])
+  lesson       lesson   @relation(fields: [lessonId], references: [id])
+  user         user     @relation(fields: [userId], references: [id])
 }
 
 model postComment {
   id           Int      @id @default(autoincrement())
   description  String
-  post_id      Int
-  user_id      Int
+  postId       Int
+  userId       Int
   creationDate DateTime @default(now()) @db.Date
-  post         post     @relation(fields: [post_id], references: [id])
-  user         user     @relation(fields: [user_id], references: [id])
+  post         post     @relation(fields: [postId], references: [id])
+  user         user     @relation(fields: [userId], references: [id])
 }
 
 model newsComment {
   id           Int      @id @default(autoincrement())
   description  String
-  news_id      Int
-  user_id      Int
+  newsId       Int
+  userId       Int
   creationDate DateTime @default(now()) @db.Date
-  news         news     @relation(fields: [news_id], references: [id])
-  user         user     @relation(fields: [user_id], references: [id])
+  news         news     @relation(fields: [newsId], references: [id])
+  user         user     @relation(fields: [userId], references: [id])
 }
 
 model postReport {
   id           Int      @id @default(autoincrement())
   description  String
-  post_id      Int
-  user_id      Int
+  postId       Int
+  userId       Int
   creationDate DateTime @default(now()) @db.Date
-  post         post     @relation(fields: [post_id], references: [id])
-  user         user     @relation(fields: [user_id], references: [id])
+  post         post     @relation(fields: [postId], references: [id])
+  user         user     @relation(fields: [userId], references: [id])
 }

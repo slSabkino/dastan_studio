@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { userServerCreateBody } from "types/usersTypes";
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState("");
@@ -6,19 +8,26 @@ export default function SignUp() {
 	const [username, setUsername] = useState("");
 	const [phone, setPhone] = useState("");
 	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [passwordre, setPasswordre] = useState("");
 
 	const onSubmit = async () => {
-		const body = {
-			first_name: firstName,
-			last_name: lastName,
+		const body: userServerCreateBody = {
+			firstName,
+			lastName,
 			username,
-			phone: parseInt(phone),
+			phone,
 			email,
+			password,
 		};
-		const data = await fetch("http://localhost:3000/api/user", {
-			method: "post",
-			body: JSON.stringify(body),
-		});
+		console.log("body : ", body);
+
+		const http = axios.create();
+		const data = await http.post("http://localhost:3000/api/userApi", body);
+		// const data = await fetch("http://localhost:3000/api/user", {
+		// 	method: "post",
+		// 	body: JSON.stringify(body),
+		// });
 		console.log("user : ", data);
 	};
 
@@ -101,8 +110,34 @@ export default function SignUp() {
 						id="email"
 					/>
 				</div>
-				<div className="form_row"></div>
-
+				<div className="form_row">
+					<label className="label" htmlFor="password">
+						password
+					</label>
+					<input
+						value={password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+						className="input"
+						type="password"
+						id="password"
+					/>
+				</div>
+				<div className="form_row">
+					<label className="label" htmlFor="passwordre">
+						repeat password
+					</label>
+					<input
+						value={passwordre}
+						onChange={(e) => {
+							setPasswordre(e.target.value);
+						}}
+						className="input"
+						type="password"
+						id="passwordre"
+					/>
+				</div>
 				<button className="btn" type="submit">
 					register
 				</button>
@@ -110,3 +145,5 @@ export default function SignUp() {
 		</div>
 	);
 }
+
+const asf = {};

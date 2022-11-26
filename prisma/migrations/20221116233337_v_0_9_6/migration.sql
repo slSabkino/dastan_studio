@@ -10,7 +10,7 @@ CREATE TABLE "province" (
 CREATE TABLE "city" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
-    "province_id" SMALLINT NOT NULL,
+    "provinceId" SMALLINT NOT NULL,
 
     CONSTRAINT "city_pkey" PRIMARY KEY ("id")
 );
@@ -18,14 +18,15 @@ CREATE TABLE "city" (
 -- CreateTable
 CREATE TABLE "user" (
     "id" SERIAL NOT NULL,
-    "first_name" VARCHAR(30) NOT NULL,
-    "last_name" VARCHAR(30) NOT NULL,
+    "firstName" VARCHAR(30) NOT NULL,
+    "lastName" VARCHAR(30) NOT NULL,
     "username" VARCHAR(30) NOT NULL,
-    "phone" SMALLINT NOT NULL,
-    "permission_level" SMALLINT NOT NULL DEFAULT 0,
-    "RegisterDate" DATE NOT NULL,
-    "email" VARCHAR(70),
-    "city_id" SMALLINT,
+    "phone" VARCHAR(10) NOT NULL,
+    "email" VARCHAR(70) NOT NULL,
+    "password" VARCHAR(30) NOT NULL,
+    "permissionLevel" SMALLINT NOT NULL DEFAULT 0,
+    "RegisterDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "cityId" SMALLINT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -42,7 +43,7 @@ CREATE TABLE "category" (
 CREATE TABLE "subCategory" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
-    "category_id" SMALLINT NOT NULL,
+    "categoryId" SMALLINT NOT NULL,
 
     CONSTRAINT "subCategory_pkey" PRIMARY KEY ("id")
 );
@@ -60,10 +61,10 @@ CREATE TABLE "course" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
-    "banner_url" TEXT NOT NULL,
-    "author_id" INTEGER NOT NULL,
-    "category_id" SMALLINT NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT false,
+    "bannerUrl" TEXT NOT NULL,
+    "authorId" INTEGER NOT NULL,
+    "categoryId" SMALLINT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
     "price" INTEGER,
@@ -76,10 +77,10 @@ CREATE TABLE "lesson" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
-    "banner_url" TEXT NOT NULL,
-    "video_url" TEXT NOT NULL,
-    "author_id" INTEGER NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT false,
+    "bannerUrl" TEXT NOT NULL,
+    "videoUrl" TEXT NOT NULL,
+    "authorId" INTEGER NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -91,10 +92,10 @@ CREATE TABLE "post" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
-    "banner_url" TEXT NOT NULL,
-    "author_id" INTEGER NOT NULL,
-    "category_id" SMALLINT NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT false,
+    "bannerUrl" TEXT NOT NULL,
+    "authorId" INTEGER NOT NULL,
+    "categoryId" SMALLINT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -106,10 +107,10 @@ CREATE TABLE "news" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
-    "banner_url" TEXT NOT NULL,
-    "author_id" INTEGER NOT NULL,
-    "category_id" SMALLINT NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT false,
+    "bannerUrl" TEXT NOT NULL,
+    "authorId" INTEGER NOT NULL,
+    "categoryId" SMALLINT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -117,23 +118,23 @@ CREATE TABLE "news" (
 );
 
 -- CreateTable
-CREATE TABLE "admin_message" (
+CREATE TABLE "adminMessage" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
-    "user_id" INTEGER NOT NULL,
-    "is_readed" BOOLEAN NOT NULL DEFAULT false,
+    "userId" INTEGER NOT NULL,
+    "isReaded" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "admin_message_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "adminMessage_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "courseComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "course_id" SMALLINT NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "courseId" SMALLINT NOT NULL,
+    "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "courseComment_pkey" PRIMARY KEY ("id")
@@ -143,8 +144,8 @@ CREATE TABLE "courseComment" (
 CREATE TABLE "lessonComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "lesson_id" INTEGER NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "lessonId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "lessonComment_pkey" PRIMARY KEY ("id")
@@ -154,8 +155,8 @@ CREATE TABLE "lessonComment" (
 CREATE TABLE "postComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "post_id" INTEGER NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "postId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "postComment_pkey" PRIMARY KEY ("id")
@@ -165,8 +166,8 @@ CREATE TABLE "postComment" (
 CREATE TABLE "newsComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "news_id" INTEGER NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "newsId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "newsComment_pkey" PRIMARY KEY ("id")
@@ -176,8 +177,8 @@ CREATE TABLE "newsComment" (
 CREATE TABLE "postReport" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "post_id" INTEGER NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "postId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "postReport_pkey" PRIMARY KEY ("id")
@@ -214,6 +215,12 @@ CREATE TABLE "_courseTokeyword" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_phone_key" ON "user"("phone");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_subCategoryTouser_AB_unique" ON "_subCategoryTouser"("A", "B");
 
 -- CreateIndex
@@ -244,67 +251,67 @@ CREATE UNIQUE INDEX "_courseTokeyword_AB_unique" ON "_courseTokeyword"("A", "B")
 CREATE INDEX "_courseTokeyword_B_index" ON "_courseTokeyword"("B");
 
 -- AddForeignKey
-ALTER TABLE "city" ADD CONSTRAINT "city_province_id_fkey" FOREIGN KEY ("province_id") REFERENCES "province"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "city" ADD CONSTRAINT "city_provinceId_fkey" FOREIGN KEY ("provinceId") REFERENCES "province"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_city_id_fkey" FOREIGN KEY ("city_id") REFERENCES "city"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "user" ADD CONSTRAINT "user_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "subCategory" ADD CONSTRAINT "subCategory_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "subCategory" ADD CONSTRAINT "subCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "course" ADD CONSTRAINT "course_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "course" ADD CONSTRAINT "course_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "course" ADD CONSTRAINT "course_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "course" ADD CONSTRAINT "course_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lesson" ADD CONSTRAINT "lesson_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "lesson" ADD CONSTRAINT "lesson_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post" ADD CONSTRAINT "post_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "post" ADD CONSTRAINT "post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post" ADD CONSTRAINT "post_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "post" ADD CONSTRAINT "post_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "news" ADD CONSTRAINT "news_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "news" ADD CONSTRAINT "news_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "news" ADD CONSTRAINT "news_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "news" ADD CONSTRAINT "news_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "admin_message" ADD CONSTRAINT "admin_message_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "adminMessage" ADD CONSTRAINT "adminMessage_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_course_id_fkey" FOREIGN KEY ("course_id") REFERENCES "course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_lesson_id_fkey" FOREIGN KEY ("lesson_id") REFERENCES "lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postComment" ADD CONSTRAINT "postComment_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postComment" ADD CONSTRAINT "postComment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postComment" ADD CONSTRAINT "postComment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postComment" ADD CONSTRAINT "postComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_news_id_fkey" FOREIGN KEY ("news_id") REFERENCES "news"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_newsId_fkey" FOREIGN KEY ("newsId") REFERENCES "news"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postReport" ADD CONSTRAINT "postReport_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postReport" ADD CONSTRAINT "postReport_postId_fkey" FOREIGN KEY ("postId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postReport" ADD CONSTRAINT "postReport_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postReport" ADD CONSTRAINT "postReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_subCategoryTouser" ADD CONSTRAINT "_subCategoryTouser_A_fkey" FOREIGN KEY ("A") REFERENCES "subCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;

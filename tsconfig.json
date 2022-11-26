@@ -27,7 +27,7 @@
 			"@components/*": ["components/*"],
 			"@layouts/*": ["layouts/*"],
 			"@utilities/*": ["utilities/*"],
-			"@propsTypes/*": ["props_types/*"],
+			"@propsTypes/*": ["types/*"],
 			"@providers/*": ["providers/*"]
 		}
 	},

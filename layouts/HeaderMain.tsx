@@ -1,5 +1,5 @@
 import Account from "@components/account";
-import headerProps from "@propsTypes/header";
+import headerProps from "types/headerTypes";
 
 interface props {
 	location: headerProps;
