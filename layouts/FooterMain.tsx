@@ -16,6 +16,9 @@ export default function FooterMain() {
 				<li className="footer_link">
 					<Link href="/news">news</Link>
 				</li>
+				<li className="footer_link">
+					<Link href="/profile">profile</Link>
+				</li>
 			</ul>
 		</div>
 	);

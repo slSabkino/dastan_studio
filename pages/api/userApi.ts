@@ -4,7 +4,7 @@ import { userServerCreateBody } from "types/usersTypes";
 
 const prisma = new PrismaClient();
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse) {
+export default async function userApi(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case "POST": {
 			const user = await createUser(req.body);

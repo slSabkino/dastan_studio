@@ -1,21 +1,46 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { deleteCookie, getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
+
+enum tokenState {
+	hasToken,
+	noToken,
+	loading,
+}
 
 export default function Account() {
-	const { data: session, status } = useSession();
-	console.log("session status : ", status);
-	console.log("session : ", session);
-	return (
-		<div>
-			{session ? (
-				<div className="btn" onClick={() => signOut()}>
+	const [token, setToken] = useState(tokenState.loading);
+
+	useEffect(() => {
+		setToken(
+			getCookie("token", { domain: "localhost", path: "/" })
+				? tokenState.hasToken
+				: tokenState.noToken
+		);
+	}, []);
+
+	function signOut() {
+		deleteCookie("token");
+		setToken(tokenState.noToken);
+	}
+
+	function renderState() {
+		if (token === tokenState.hasToken) {
+			return (
+				<div className="btn" onClick={signOut}>
 					<p>sign out</p>
-					<p>{session.user?.name}</p>
 				</div>
-			) : (
-				<div className="btn" onClick={() => signIn()}>
+			);
+		} else if (token === tokenState.noToken) {
+			return (
+				<Link href="/login" className="btn">
 					sign in
-				</div>
-			)}
-		</div>
-	);
+				</Link>
+			);
+		} else {
+			<div className="btn">...</div>;
+		}
+	}
+
+	return <div>{renderState()}</div>;
 }

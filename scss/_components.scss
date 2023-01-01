@@ -55,13 +55,23 @@
 	// background-color: white;
 	padding: 1rem;
 	gap: 1rem;
-	max-width: 20rem;
+	max-width: 50rem;
+	width: 100%;
 	max-height: max-content;
 	flex-grow: 0;
 }
+
 .form_row {
 	align-items: flex-start;
+	width: 100%;
 }
+
+.input {
+	border: 1px solid blue;
+	border-radius: 0.6rem;
+	width: 100%;
+}
+
 .footer_link {
 	cursor: pointer;
 	user-select: none;

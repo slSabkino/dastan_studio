@@ -28,7 +28,8 @@
 			"@layouts/*": ["layouts/*"],
 			"@utilities/*": ["utilities/*"],
 			"@propsTypes/*": ["types/*"],
-			"@providers/*": ["providers/*"]
+			"@providers/*": ["providers/*"],
+			"@services/": ["services/*"]
 		}
 	},
 	"include": [
@@ -38,7 +39,8 @@
 		".next/types/**/*.ts",
 		"app/layout.tsx",
 		"pages/_app.js",
-		"layouts/HeaderMain.jsx"
+		"layouts/HeaderMain.jsx",
+		"pages/school/courses/index.jsx"
 	],
 	"exclude": ["node_modules"]
 }

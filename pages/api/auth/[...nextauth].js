@@ -2,49 +2,64 @@ import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
-	providers: [
-		CredentialsProvider({
-			name: "account",
-			credentials: {
-				username: {
-					label: "Username",
-					type: "text",
-					placeholder: "your username : ",
-				},
-				password: {
-					label: "Password",
-					type: "password",
-					value: "",
-					placeholder: "your Password : ",
-				},
-			},
+const prisma = new PrismaClient();
 
-			async authorize(credentials, req) {
-				const prisma = new PrismaClient();
-				const req_user = await prisma.user.findFirst({
-					where: { first_name: "saeedr" },
-				});
+// export default NextAuth({
+// 	providers: [
+// 		CredentialsProvider({
+// 			name: "account",
+// 			credentials: {
+// 				username: {
+// 					label: "Username",
+// 					type: "text",
+// 					placeholder: "your username : ",
+// 				},
+// 				password: {
+// 					label: "Password",
+// 					type: "password",
+// 					value: "",
+// 					placeholder: "your Password : ",
+// 				},
+// 			},
 
-				console.log("req_user : ", req_user);
+// 			async authorize(credentials, req) {
+// 				console.log("req_user : ", req);
 
-				console.log("credentials : ", credentials);
-				console.log("credentials req : ", req);
-				const user = {
-					id: "1",
-					name: "J Smith",
-					email: "jsmith@example.com",
-				};
+// 				const user = {
+// 					id: "1",
+// 					name: "J Smith",
+// 					email: "jsmith@example.com",
+// 				};
+// 				return user;
 
-				if (user) {
-					// Any object returned will be saved in `user` property of the JWT
-					return user;
-				}
-			},
-		}),
-	],
-	pages: { signIn: "/login" },
-});
+// 				try {
+// 					const req_user = await prisma.user.findFirst({
+// 						where: { first_name: req?.body?.username },
+// 					});
+
+// 					console.log("credentials : ", credentials);
+// 					console.log("credentials req : ", req);
+// 					const user = {
+// 						id: "1",
+// 						name: "J Smith",
+// 						email: "jsmith@example.com",
+// 					};
+
+// 					if (user) {
+// 						// Any object returned will be saved in `user` property of the JWT
+// 						return user;
+// 					}
+// 				} catch (error) {}
+// 			},
+// 		}),
+// 	],
+// 	callbacks: {
+// 		async signIn(req) {
+// 			console.log("req_user : ", req);
+// 		},
+// 	},
+// 	// pages: { signIn: "/login" },
+// });
 
 const asd = {
 	credentials: {

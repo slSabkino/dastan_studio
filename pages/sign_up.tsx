@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import HTTP from "../providers/HTTPService";
 import { userServerCreateBody } from "types/usersTypes";
 
 export default function SignUp() {
@@ -22,12 +22,7 @@ export default function SignUp() {
 		};
 		console.log("body : ", body);
 
-		const http = axios.create();
-		const data = await http.post("http://localhost:3000/api/userApi", body);
-		// const data = await fetch("http://localhost:3000/api/user", {
-		// 	method: "post",
-		// 	body: JSON.stringify(body),
-		// });
+		const data = await HTTP.post("userApi", body);
 		console.log("user : ", data);
 	};
 
@@ -145,5 +140,3 @@ export default function SignUp() {
 		</div>
 	);
 }
-
-const asf = {};
