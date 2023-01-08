@@ -11,21 +11,22 @@ export default async function userApi(req: NextApiRequest, res: NextApiResponse)
 			res.json({ cookie: req.cookies });
 		}
 		case "POST": {
-			try {
-				const acount = await checkUser(req.body);
-				console.log("create user : ", acount);
-				res.setHeader(
-					"Set-Cookie",
-					serialize("token", acount.token, {
-						maxAge: 60 * 60 * 12 * 30,
-						domain: "localhost",
-						path: "/",
-					})
-				);
-				res.json(acount.user);
-			} catch (error) {
-				res.json({ err: error });
-			}
+			// try {
+			console.log("create user : ", req.body);
+			// const acount = await checkUser(req.body);
+			// res.setHeader(
+			// 	"Set-Cookie",
+			// 	serialize("token", acount.token, {
+			// 		maxAge: 60 * 60 * 12 * 30,
+			// 		domain: "localhost",
+			// 		path: "/",
+			// 	})
+			// );
+			// res.json(acount.user);
+			res.json({ soso: true });
+			// } catch (error) {
+			// 	res.json({ err: error });
+			// }
 		}
 		default: {
 			res.json({ log: req.method });

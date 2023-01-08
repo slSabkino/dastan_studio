@@ -1,37 +1,40 @@
 import Link from "next/link";
 import { deleteCookie, getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-
-enum tokenState {
-	hasToken,
-	noToken,
-	loading,
-}
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { loginState, noUser, tokenAtom, userAtom } from "@providers/recoilAtoms";
 
 export default function Account() {
-	const [token, setToken] = useState(tokenState.loading);
+	const [token, setToken] = useRecoilState(tokenAtom);
+	const [_user, setUser] = useRecoilState(userAtom);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		setToken(
-			getCookie("token", { domain: "localhost", path: "/" })
-				? tokenState.hasToken
-				: tokenState.noToken
+			getCookie("token", { domain: "localhost", path: "/", sameSite: false })
+				? loginState.hasToken
+				: loginState.noToken
 		);
 	}, []);
 
 	function signOut() {
 		deleteCookie("token");
-		setToken(tokenState.noToken);
+		setToken(loginState.noToken);
+		localStorage.removeItem("user");
+		setUser(noUser);
+		router.push("/");
 	}
 
 	function renderState() {
-		if (token === tokenState.hasToken) {
+		if (token === loginState.hasToken) {
 			return (
 				<div className="btn" onClick={signOut}>
-					<p>sign out</p>
+					<span>sign out</span>
 				</div>
 			);
-		} else if (token === tokenState.noToken) {
+		} else if (token === loginState.noToken) {
 			return (
 				<Link href="/login" className="btn">
 					sign in

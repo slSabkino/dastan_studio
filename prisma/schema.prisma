@@ -1,6 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// npx prisma migrate dev --name init
+// npx prisma generate
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -42,7 +45,6 @@ model user {
   city            city?           @relation(fields: [cityId], references: [id])
   interests       subCategory[]
   course          course[]
-  lesson          lesson[]
   post            post[]
   news            news[]
   adminMessage    adminMessage[]
@@ -95,6 +97,7 @@ model course {
   category     subCategory     @relation(fields: [categoryId], references: [id])
   keywords     keyword[]
   comments     courseComment[]
+  lessons      lesson[]
 }
 
 model lesson {
@@ -103,13 +106,13 @@ model lesson {
   description   String
   bannerUrl     String
   videoUrl      String
-  authorId      Int
+  courseId      Int
   isActive      Boolean         @default(false)
   creationDate  DateTime        @default(now()) @db.Date
   updateDate    DateTime?       @db.Date
-  author        user            @relation(fields: [authorId], references: [id])
   keywords      keyword[]
   lessonComment lessonComment[]
+  course        course          @relation(fields: [courseId], references: [id])
 }
 
 model post {

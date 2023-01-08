@@ -1,11 +1,27 @@
 import HTTPService from "@providers/HTTPService";
 import Link from "next/link";
 import { useState } from "react";
-import { getCookie } from "cookies-next";
+import { useRecoilState } from "recoil";
+import { loginState, tokenAtom, userAtom } from "@providers/recoilAtoms";
+import { useRouter } from "next/router";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const [_token, setToken] = useRecoilState(tokenAtom);
+	const [_user, setUser] = useRecoilState(userAtom);
+
+	const router = useRouter();
+
+	async function onLogin(email: string, password: string) {
+		const { data } = await HTTPService.post("loginApi", { email, password });
+		setToken(loginState.hasToken);
+		console.log("loged in : ", data);
+		localStorage.setItem("user", JSON.stringify(data));
+		setUser(data);
+		router.push("/");
+	}
 
 	return (
 		<div>
@@ -35,31 +51,10 @@ export default function Login() {
 					login
 				</div>
 
-				<div className="btn" onClick={testLogin}>
-					test login
-				</div>
 				<Link className="link bold" href="/sign_up">
 					<p>or create your account</p>
 				</Link>
 			</form>
 		</div>
 	);
-}
-
-async function onLogin(email: string, password: string) {
-	try {
-		const { data } = await HTTPService.post("loginApi", { email, password });
-		console.log("loged in : ", data);
-	} catch (error) {
-		console.log("err : ", error);
-	}
-}
-
-async function testLogin() {
-	try {
-		const { data } = await HTTPService.get("loginApi");
-		console.log("loged in : ", data);
-	} catch (error) {
-		console.log("err : ", error);
-	}
 }

@@ -79,7 +79,7 @@ CREATE TABLE "lesson" (
     "description" TEXT NOT NULL,
     "bannerUrl" TEXT NOT NULL,
     "videoUrl" TEXT NOT NULL,
-    "authorId" INTEGER NOT NULL,
+    "courseId" INTEGER NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
@@ -266,7 +266,7 @@ ALTER TABLE "course" ADD CONSTRAINT "course_authorId_fkey" FOREIGN KEY ("authorI
 ALTER TABLE "course" ADD CONSTRAINT "course_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "subCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lesson" ADD CONSTRAINT "lesson_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "lesson" ADD CONSTRAINT "lesson_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "post" ADD CONSTRAINT "post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

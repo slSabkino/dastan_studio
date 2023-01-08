@@ -1,5 +1,6 @@
+import HTTPService from "@providers/HTTPService";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import HTTP from "../../../providers/HTTPService";
 
 export default function Courses() {
 	const [courses, setCourses] = useState([]);
@@ -8,14 +9,23 @@ export default function Courses() {
 	}, []);
 
 	async function getCourses() {
-		const { data } = await HTTP.get("coursesApi");
+		const { data } = await HTTPService.get("courses");
 		console.log("courses : ", data);
 		setCourses(data);
 	}
 	return (
 		<div className="users">
-			{courses.map((cours: any, index) => {
-				return <div key={index}>{cours.title}</div>;
+			{courses.map((course: any, index) => {
+				return (
+					<div key={index}>
+						<Link
+							className="link"
+							href={`/school/courses/${course.title}/${course.id}`}
+						>
+							{course.title}
+						</Link>
+					</div>
+				);
 			})}
 		</div>
 	);

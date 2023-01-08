@@ -1,13 +1,3 @@
-// $color-primary: rgb(20, 80, 180);
-// $color-secondary: rgb(149, 120, 255);
-// $color-highlight: rgb(200, 226, 0);
-// $color-background: rgb(255, 240, 230);
-
-$color-primary: rgb(20, 80, 180);
-$color-secondary: rgb(38, 0, 175);
-$color-highlight: rgb(121, 136, 0);
-$color-background: rgb(255, 240, 230);
-
 $max-width: 1600px;
 $tablet: 910px;
 $phone: 660px;
@@ -18,21 +8,16 @@ $font-esfahan: esfahan, sans-serif;
 
 @font-face {
 	font-family: homa;
-	// src: url(/homa.woff);
 	src: url(/homa.woff);
 }
 
 @font-face {
 	font-family: esfahan;
-	// src: url(/esfahan.woff);
 	src: url(/esfahan.woff);
 }
 
 * {
-	// position: inherit;
 	align-items: center;
-	background-color: unset;
-	border-width: 0;
 	box-sizing: border-box;
 	color: inherit;
 	cursor: inherit;
@@ -48,31 +33,10 @@ $font-esfahan: esfahan, sans-serif;
 	min-width: 1rem;
 	outline: none;
 	padding: 0;
-	scrollbar-color: inherit;
-	scrollbar-gutter: inherit;
-	scrollbar-width: inherit;
-	text-decoration: inherit;
-	user-select: inherit;
-
-	&::selection {
-		// color: $color-secondary;
-		background: $color-highlight;
-	}
 
 	&:focus {
 		outline: none;
 	}
-
-	&::-webkit-scrollbar {
-		width: inherit;
-		background-color: inherit;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: inherit;
-	}
-
-	-webkit-tap-highlight-color: transparent;
 }
 
 h1,
@@ -81,28 +45,15 @@ h3 {
 	font-family: $font-esfahan;
 }
 
+a {
+	cursor: pointer;
+	user-select: none;
+}
+
 body {
-	// direction: rtl;
-	// overflow-x: hidden;
-
-	&::-webkit-scrollbar {
-		width: 0.4rem;
-		background-color: $color-secondary;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: $color-primary;
-	}
+	margin: 0;
 }
 
-//scrollbars
-:root {
-	scrollbar-color: $color-primary $color-secondary;
-	scrollbar-gutter: $color-primary;
-	scrollbar-width: thin;
-}
-
-//input buttons hide
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;

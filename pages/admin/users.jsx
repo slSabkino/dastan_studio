@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import HTTP from "../../service/axiosClone";
+import HTTPService from "@providers/HTTPService";
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ export default function Users() {
 	}, []);
 
 	async function getUsers() {
-		const { data } = await HTTP.get("userApi");
+		const { data } = await HTTPService.get("userApi");
 		console.log("users : ", data);
 		setUsers(data);
 	}

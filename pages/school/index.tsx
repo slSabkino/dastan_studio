@@ -4,9 +4,9 @@ export default function School() {
 	return (
 		<div>
 			<div>مدرسه</div>
-			<div>
-				<Link href={"/school/courses"}>courses</Link>
-			</div>
+			<Link className="link" href={"/school/courses"}>
+				courses
+			</Link>
 		</div>
 	);
 }

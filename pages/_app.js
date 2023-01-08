@@ -1,14 +1,17 @@
-import { SessionProvider } from "next-auth/react";
 import RootLayout from "@layouts/layout";
+import { RecoilRoot } from "recoil";
+// import Interceptor from "@providers/interceptor";
+import Mil from "milligram";
 import "../styles/main.css";
 
 export default function App({ Component, pageProps }) {
 	return (
-		// <SessionProvider session={session}>
-		<SessionProvider session={pageProps.session}>
+		<RecoilRoot>
+			{/* <Interceptor> */}
 			<RootLayout>
 				<Component {...pageProps} />
 			</RootLayout>
-		</SessionProvider>
+			{/* </Interceptor> */}
+		</RecoilRoot>
 	);
 }

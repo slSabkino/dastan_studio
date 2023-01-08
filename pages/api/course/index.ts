@@ -13,26 +13,8 @@ export default async function courseApi(req: NextApiRequest, res: NextApiRespons
 			break;
 		}
 
-		case "GET": {
-			const users = await getOneCourse(req.body.id);
-			console.log("get user : ", users);
-			res.json(users);
-			break;
-		}
-
 		default:
 			res.json({ err: "not supported method" });
-	}
-}
-
-async function getOneCourse(courseId: number) {
-	try {
-		const course = await prisma.course.findFirst({
-			where: { id: courseId },
-		});
-		return course;
-	} catch (error) {
-		return { err: "some error on get course" };
 	}
 }
 
