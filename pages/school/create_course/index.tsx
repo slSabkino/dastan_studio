@@ -1,13 +1,13 @@
-import { courseServerCreateBody } from "@propsTypes/coursesTypes";
+import { iCourse } from "../../../models/interfaceCourse";
+import HTTPService from "@providers/HTTPService";
 import { useState } from "react";
-import HTTP from "../../../providers/HTTPService";
 
 export default function CreateCourse() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 
 	const onSubmit = async () => {
-		const body: courseServerCreateBody = {
+		const body: iCourse = {
 			authorId: 2,
 			bannerUrl: "",
 			categoryId: 1,
@@ -16,7 +16,7 @@ export default function CreateCourse() {
 		};
 		console.log("body : ", body);
 
-		const data = await HTTP.post("courseApi", body);
+		const data = await HTTPService.post("courseApi", body);
 		console.log("user : ", data);
 	};
 
@@ -54,16 +54,7 @@ export default function CreateCourse() {
 					onChange={(e) => setDescription(e.target.value)}
 				/>
 			</div>
-			<button className="btn" type="submit">
-				create
-			</button>
+			<button type="submit">create</button>
 		</form>
 	);
 }
-
-// title: string;
-// 	description: string;
-// 	bannerUrl: string;
-// 	authorId: number;
-// 	categoryId: number;
-// 	price?: number;

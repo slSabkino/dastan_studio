@@ -42,6 +42,10 @@ a {
           user-select: none;
 }
 
+:root {
+  font-size: 100%;
+}
+
 body {
   margin: 0;
 }
@@ -72,7 +76,7 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   font-family: homa, sans-serif;
-  font-size: 1.6rem;
+  font-size: 1rem;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
@@ -125,4 +129,13 @@ input[type=number] {
   height: max-content;
   margin: 0;
   align-items: center;
+  min-height: 3rem;
+}
+
+.btn {
+  border: 1px solid #5337b8;
+  color: #5337b8;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

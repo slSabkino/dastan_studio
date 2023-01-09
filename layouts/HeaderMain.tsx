@@ -1,7 +1,7 @@
 import Account from "@components/account";
+import headerProps from "@models/headerTypes";
 import { userAtom } from "@providers/recoilAtoms";
 import { useRecoilState } from "recoil";
-import headerProps from "types/headerTypes";
 
 interface props {
 	location: headerProps;

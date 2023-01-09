@@ -11,22 +11,29 @@ export default async function userApi(req: NextApiRequest, res: NextApiResponse)
 			res.json({ cookie: req.cookies });
 		}
 		case "POST": {
-			// try {
-			console.log("create user : ", req.body);
-			// const acount = await checkUser(req.body);
-			// res.setHeader(
-			// 	"Set-Cookie",
-			// 	serialize("token", acount.token, {
-			// 		maxAge: 60 * 60 * 12 * 30,
-			// 		domain: "localhost",
-			// 		path: "/",
-			// 	})
-			// );
-			// res.json(acount.user);
-			res.json({ soso: true });
-			// } catch (error) {
-			// 	res.json({ err: error });
-			// }
+			try {
+				console.log("create user : ", req.body);
+				const acount = await checkUser(req.body);
+				if (acount) {
+					res.setHeader(
+						"Set-Cookie",
+						serialize("token", acount.token, {
+							// sameSite: false,
+							maxAge: 60 * 60 * 12 * 30,
+							// domain: "localhost",
+							// path: "/",
+						})
+					);
+					res.json({ state: true, acount: acount.user });
+				} else {
+					res.json({
+						state: false,
+						error: "not valid",
+					});
+				}
+			} catch (error) {
+				res.json({ state: false, error });
+			}
 		}
 		default: {
 			res.json({ log: req.method });
@@ -40,6 +47,7 @@ async function checkUser({ email, password }: { email: string; password: string 
 			email,
 		},
 	});
+	console.log("user : ", user);
 
 	if (user && user.password === password) {
 		const token = jwt.sign(

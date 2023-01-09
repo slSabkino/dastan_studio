@@ -27,9 +27,11 @@
 			"@components/*": ["components/*"],
 			"@layouts/*": ["layouts/*"],
 			"@utilities/*": ["utilities/*"],
-			"@propsTypes/*": ["types/*"],
 			"@providers/*": ["providers/*"],
-			"@services/": ["services/*"]
+			"@server/*": ["providers/serverApi/*"],
+			"@client/*": ["providers/clientApi/*"],
+			"@services/*": ["services/*"],
+			"@models/*": ["models/*"]
 		}
 	},
 	"include": [

@@ -27,6 +27,8 @@ CREATE TABLE "user" (
     "permissionLevel" SMALLINT NOT NULL DEFAULT 0,
     "RegisterDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "cityId" SMALLINT,
+    "interestsID" INTEGER[],
+    "subCategoryId" SMALLINT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -185,12 +187,6 @@ CREATE TABLE "postReport" (
 );
 
 -- CreateTable
-CREATE TABLE "_subCategoryTouser" (
-    "A" SMALLINT NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "_keywordTolesson" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -221,12 +217,6 @@ CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 CREATE UNIQUE INDEX "user_phone_key" ON "user"("phone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_subCategoryTouser_AB_unique" ON "_subCategoryTouser"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_subCategoryTouser_B_index" ON "_subCategoryTouser"("B");
-
--- CreateIndex
 CREATE UNIQUE INDEX "_keywordTolesson_AB_unique" ON "_keywordTolesson"("A", "B");
 
 -- CreateIndex
@@ -255,6 +245,9 @@ ALTER TABLE "city" ADD CONSTRAINT "city_provinceId_fkey" FOREIGN KEY ("provinceI
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user" ADD CONSTRAINT "user_subCategoryId_fkey" FOREIGN KEY ("subCategoryId") REFERENCES "subCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "subCategory" ADD CONSTRAINT "subCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -312,12 +305,6 @@ ALTER TABLE "postReport" ADD CONSTRAINT "postReport_postId_fkey" FOREIGN KEY ("p
 
 -- AddForeignKey
 ALTER TABLE "postReport" ADD CONSTRAINT "postReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_subCategoryTouser" ADD CONSTRAINT "_subCategoryTouser_A_fkey" FOREIGN KEY ("A") REFERENCES "subCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_subCategoryTouser" ADD CONSTRAINT "_subCategoryTouser_B_fkey" FOREIGN KEY ("B") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_keywordTolesson" ADD CONSTRAINT "_keywordTolesson_A_fkey" FOREIGN KEY ("A") REFERENCES "keyword"("id") ON DELETE CASCADE ON UPDATE CASCADE;

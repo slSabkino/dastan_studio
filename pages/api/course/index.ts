@@ -1,33 +1,25 @@
-import { PrismaClient } from "@prisma/client";
-import { courseServerCreateBody } from "@propsTypes/coursesTypes";
+import CourseServerApi from "@providers/serverApi/courseServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const prisma = new PrismaClient();
+const courseServerApi = new CourseServerApi();
 
-export default async function courseApi(req: NextApiRequest, res: NextApiResponse) {
+export default async function coursesHandler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case "POST": {
-			const user = await createCourse(req.body);
+			const user = await courseServerApi.create(req.body);
 			console.log("create user : ", user);
 			res.json(user);
 			break;
 		}
 
+		case "GET": {
+			const users = await courseServerApi.getAll();
+			console.log("get user : ", users);
+			res.json(users);
+			break;
+		}
+
 		default:
 			res.json({ err: "not supported method" });
-	}
-}
-
-async function createCourse(body: courseServerCreateBody) {
-	try {
-		const queryRes = await prisma.course.create({
-			data: body,
-		});
-		console.log("courseInfo : ", queryRes);
-		return queryRes;
-	} catch (error: any) {
-		console.log("courseErr : ", error.message);
-		return { err: error.message };
-		// return { err: "some error on create user" };
 	}
 }

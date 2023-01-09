@@ -4,9 +4,7 @@ import HTTPService from "@providers/HTTPService";
 export default function Users() {
 	const [users, setUsers] = useState([]);
 	useEffect(() => {
-		console.log("befor user : ", users);
 		getUsers();
-		console.log("after user : ", users);
 	}, []);
 
 	async function getUsers() {

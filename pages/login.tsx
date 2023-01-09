@@ -16,16 +16,25 @@ export default function Login() {
 
 	async function onLogin(email: string, password: string) {
 		const { data } = await HTTPService.post("loginApi", { email, password });
-		setToken(loginState.hasToken);
-		console.log("loged in : ", data);
-		localStorage.setItem("user", JSON.stringify(data));
-		setUser(data);
-		router.push("/");
+		console.log("logindata : ", data);
+
+		if (data.state) {
+			localStorage.setItem("user", JSON.stringify(data));
+			setToken(loginState.hasToken);
+			setUser(data);
+			router.push("/");
+		}
 	}
 
 	return (
 		<div>
-			<form className="form">
+			<form
+				className="form"
+				onSubmit={(e) => {
+					e.preventDefault();
+					onLogin(email, password);
+				}}
+			>
 				<input
 					className="input"
 					type="text"
@@ -42,14 +51,7 @@ export default function Login() {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<div
-					className="btn"
-					onClick={() => {
-						onLogin(email, password);
-					}}
-				>
-					login
-				</div>
+				<button>login</button>
 
 				<Link className="link bold" href="/sign_up">
 					<p>or create your account</p>

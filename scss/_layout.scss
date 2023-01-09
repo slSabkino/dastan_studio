@@ -3,7 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	font-family: $font-homa;
-	font-size: 1.6rem;
+	font-size: 1rem;
 	height: max-content;
 	justify-content: space-between;
 	height: max-content;
@@ -52,4 +52,5 @@
 	height: max-content;
 	margin: 0;
 	align-items: center;
+	min-height: 3rem;
 }

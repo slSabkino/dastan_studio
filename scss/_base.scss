@@ -1,3 +1,5 @@
+$color_primary: #5337b8;
+
 $max-width: 1600px;
 $tablet: 910px;
 $phone: 660px;
@@ -48,6 +50,10 @@ h3 {
 a {
 	cursor: pointer;
 	user-select: none;
+}
+
+:root {
+	font-size: 100%;
 }
 
 body {

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import HTTP from "../providers/HTTPService";
-import { userServerCreateBody } from "types/usersTypes";
+import { iUser } from "@models/interfaceUser";
+import HTTPService from "@providers/HTTPService";
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState("");
@@ -12,7 +12,7 @@ export default function SignUp() {
 	const [passwordre, setPasswordre] = useState("");
 
 	const onSubmit = async () => {
-		const body: userServerCreateBody = {
+		const body: iUser = {
 			firstName,
 			lastName,
 			username,
@@ -22,7 +22,7 @@ export default function SignUp() {
 		};
 		console.log("body : ", body);
 
-		const data = await HTTP.post("userApi", body);
+		const data = await HTTPService.post("userApi", body);
 		console.log("user : ", data);
 	};
 
