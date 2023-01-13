@@ -1,4 +1,4 @@
-import { KeywordServerApi } from "@providers/serverApi/keyword";
+import { KeywordServerApi } from "@providers/serverApi/keywordServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {

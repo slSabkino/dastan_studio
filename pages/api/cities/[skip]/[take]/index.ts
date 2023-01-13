@@ -1,16 +1,16 @@
-import { KeywordServerApi } from "@providers/serverApi/keywordServerApi";
+import { CityServerApi } from "@providers/serverApi/cityServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const keywordServerApi = new KeywordServerApi();
+	const cityServerApi = new CityServerApi();
 
 	switch (req.method) {
 		case "GET": {
-			const categories = await keywordServerApi.getSome(
+			const cities = await cityServerApi.getSome(
 				parseInt(req.query.skip as string),
 				parseInt(req.query.take as string)
 			);
-			res.json(categories);
+			res.json(cities);
 			break;
 		}
 

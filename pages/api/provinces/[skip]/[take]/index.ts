@@ -1,16 +1,16 @@
-import { KeywordServerApi } from "@providers/serverApi/keywordServerApi";
+import { ProvinceServerApi } from "@providers/serverApi/provinceServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const keywordServerApi = new KeywordServerApi();
+	const provinceServerApi = new ProvinceServerApi();
 
 	switch (req.method) {
 		case "GET": {
-			const categories = await keywordServerApi.getSome(
+			const provinces = await provinceServerApi.getSome(
 				parseInt(req.query.skip as string),
 				parseInt(req.query.take as string)
 			);
-			res.json(categories);
+			res.json(provinces);
 			break;
 		}
 

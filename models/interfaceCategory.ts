@@ -9,7 +9,7 @@ export interface iSubCategory {
 	id: number;
 	title: string;
 	categoryId: number;
-	category?: string;
+	category?: iCategory;
 	isActive?: boolean;
 	course?: [];
 	post?: [];
