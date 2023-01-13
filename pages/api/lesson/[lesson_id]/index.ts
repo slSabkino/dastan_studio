@@ -28,6 +28,6 @@ async function getOneLesson(lessonId: number) {
 
 		return lesson;
 	} catch (error) {
-		return { err: "some error on get lesson", error };
+		return { error: "some error on get lesson" };
 	}
 }

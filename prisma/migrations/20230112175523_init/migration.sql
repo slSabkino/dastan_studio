@@ -26,9 +26,8 @@ CREATE TABLE "user" (
     "password" VARCHAR(30) NOT NULL,
     "permissionLevel" SMALLINT NOT NULL DEFAULT 0,
     "RegisterDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "cityId" SMALLINT,
-    "interestsID" INTEGER[],
-    "subCategoryId" SMALLINT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -37,6 +36,7 @@ CREATE TABLE "user" (
 CREATE TABLE "category" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "category_pkey" PRIMARY KEY ("id")
 );
@@ -46,6 +46,7 @@ CREATE TABLE "subCategory" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "categoryId" SMALLINT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "subCategory_pkey" PRIMARY KEY ("id")
 );
@@ -54,6 +55,7 @@ CREATE TABLE "subCategory" (
 CREATE TABLE "keyword" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "keyword_pkey" PRIMARY KEY ("id")
 );
@@ -66,7 +68,7 @@ CREATE TABLE "course" (
     "bannerUrl" TEXT NOT NULL,
     "authorId" INTEGER NOT NULL,
     "categoryId" SMALLINT NOT NULL,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
     "price" INTEGER,
@@ -82,7 +84,7 @@ CREATE TABLE "lesson" (
     "bannerUrl" TEXT NOT NULL,
     "videoUrl" TEXT NOT NULL,
     "courseId" INTEGER NOT NULL,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -97,7 +99,7 @@ CREATE TABLE "post" (
     "bannerUrl" TEXT NOT NULL,
     "authorId" INTEGER NOT NULL,
     "categoryId" SMALLINT NOT NULL,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -112,7 +114,7 @@ CREATE TABLE "news" (
     "bannerUrl" TEXT NOT NULL,
     "authorId" INTEGER NOT NULL,
     "categoryId" SMALLINT NOT NULL,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
 
@@ -125,6 +127,7 @@ CREATE TABLE "adminMessage" (
     "title" VARCHAR(30) NOT NULL,
     "description" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "isReaded" BOOLEAN NOT NULL DEFAULT false,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -138,6 +141,7 @@ CREATE TABLE "courseComment" (
     "courseId" SMALLINT NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "courseComment_pkey" PRIMARY KEY ("id")
 );
@@ -149,6 +153,7 @@ CREATE TABLE "lessonComment" (
     "lessonId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "lessonComment_pkey" PRIMARY KEY ("id")
 );
@@ -160,6 +165,7 @@ CREATE TABLE "postComment" (
     "postId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "postComment_pkey" PRIMARY KEY ("id")
 );
@@ -171,6 +177,7 @@ CREATE TABLE "newsComment" (
     "newsId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "newsComment_pkey" PRIMARY KEY ("id")
 );
@@ -182,8 +189,15 @@ CREATE TABLE "postReport" (
     "postId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "postReport_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_subCategoryTouser" (
+    "A" SMALLINT NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateTable
@@ -217,6 +231,12 @@ CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 CREATE UNIQUE INDEX "user_phone_key" ON "user"("phone");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_subCategoryTouser_AB_unique" ON "_subCategoryTouser"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_subCategoryTouser_B_index" ON "_subCategoryTouser"("B");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_keywordTolesson_AB_unique" ON "_keywordTolesson"("A", "B");
 
 -- CreateIndex
@@ -245,9 +265,6 @@ ALTER TABLE "city" ADD CONSTRAINT "city_provinceId_fkey" FOREIGN KEY ("provinceI
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_subCategoryId_fkey" FOREIGN KEY ("subCategoryId") REFERENCES "subCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "subCategory" ADD CONSTRAINT "subCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -305,6 +322,12 @@ ALTER TABLE "postReport" ADD CONSTRAINT "postReport_postId_fkey" FOREIGN KEY ("p
 
 -- AddForeignKey
 ALTER TABLE "postReport" ADD CONSTRAINT "postReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_subCategoryTouser" ADD CONSTRAINT "_subCategoryTouser_A_fkey" FOREIGN KEY ("A") REFERENCES "subCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_subCategoryTouser" ADD CONSTRAINT "_subCategoryTouser_B_fkey" FOREIGN KEY ("B") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_keywordTolesson" ADD CONSTRAINT "_keywordTolesson_A_fkey" FOREIGN KEY ("A") REFERENCES "keyword"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,13 +1,16 @@
 import CourseServerApi from "@providers/serverApi/courseServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function coursesHandler(req: NextApiRequest, res: NextApiResponse) {
+export default async function lessonApiID(req: NextApiRequest, res: NextApiResponse) {
 	const courseServerApi = new CourseServerApi();
 
 	switch (req.method) {
-		case "POST": {
-			const course = await courseServerApi.create(req.body);
-			res.json(course);
+		case "GET": {
+			const courses = await courseServerApi.getSome(
+				parseInt(req.query.skip as string),
+				parseInt(req.query.take as string)
+			);
+			res.json(courses);
 			break;
 		}
 

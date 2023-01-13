@@ -16,9 +16,10 @@ datasource db {
 //level one
 
 model province {
-  id    Int    @id @default(autoincrement()) @db.SmallInt
-  title String @db.VarChar(30)
-  city  city[]
+  id       Int     @id @default(autoincrement()) @db.SmallInt
+  title    String  @db.VarChar(30)
+  city     city[]
+  isActive Boolean @default(true)
 }
 
 model city {
@@ -27,6 +28,7 @@ model city {
   province   province @relation(fields: [provinceId], references: [id])
   provinceId Int      @db.SmallInt
   user       user[]
+  isActive   Boolean  @default(true)
 }
 
 //level two
@@ -41,6 +43,7 @@ model user {
   password        String          @db.VarChar(30)
   permissionLevel Int             @default(0) @db.SmallInt
   RegisterDate    DateTime        @default(now()) @db.Date
+  isActive        Boolean         @default(false)
   cityId          Int?            @db.SmallInt
   city            city?           @relation(fields: [cityId], references: [id])
   interests       subCategory[]
@@ -58,6 +61,7 @@ model user {
 model category {
   id          Int           @id @default(autoincrement()) @db.SmallInt
   title       String        @db.VarChar(30)
+  isActive    Boolean       @default(true)
   subCategory subCategory[]
 }
 
@@ -66,6 +70,7 @@ model subCategory {
   title      String   @db.VarChar(30)
   categoryId Int      @db.SmallInt
   category   category @relation(fields: [categoryId], references: [id])
+  isActive   Boolean  @default(true)
   interests  user[]
   course     course[]
   post       post[]
@@ -73,12 +78,13 @@ model subCategory {
 }
 
 model keyword {
-  id     Int      @id @default(autoincrement())
-  title  String   @db.VarChar(30)
-  course course[]
-  lesson lesson[]
-  post   post[]
-  news   news[]
+  id       Int      @id @default(autoincrement())
+  title    String   @db.VarChar(30)
+  isActive Boolean  @default(true)
+  course   course[]
+  lesson   lesson[]
+  post     post[]
+  news     news[]
 }
 
 //level three
@@ -89,7 +95,7 @@ model course {
   bannerUrl    String
   authorId     Int
   categoryId   Int             @db.SmallInt
-  isActive     Boolean         @default(false)
+  isActive     Boolean         @default(true)
   creationDate DateTime        @default(now()) @db.Date
   updateDate   DateTime?       @db.Date
   price        Int?
@@ -107,7 +113,7 @@ model lesson {
   bannerUrl     String
   videoUrl      String
   courseId      Int
-  isActive      Boolean         @default(false)
+  isActive      Boolean         @default(true)
   creationDate  DateTime        @default(now()) @db.Date
   updateDate    DateTime?       @db.Date
   keywords      keyword[]
@@ -122,7 +128,7 @@ model post {
   bannerUrl    String
   authorId     Int
   categoryId   Int           @db.SmallInt
-  isActive     Boolean       @default(false)
+  isActive     Boolean       @default(true)
   creationDate DateTime      @default(now()) @db.Date
   updateDate   DateTime?     @db.Date
   author       user          @relation(fields: [authorId], references: [id])
@@ -139,7 +145,7 @@ model news {
   bannerUrl    String
   authorId     Int
   categoryId   Int           @db.SmallInt
-  isActive     Boolean       @default(false)
+  isActive     Boolean       @default(true)
   creationDate DateTime      @default(now()) @db.Date
   updateDate   DateTime?     @db.Date
   category     subCategory   @relation(fields: [categoryId], references: [id])
@@ -153,6 +159,7 @@ model adminMessage {
   title        String   @db.VarChar(30)
   description  String
   userId       Int
+  isActive     Boolean  @default(true)
   isReaded     Boolean  @default(false)
   creationDate DateTime @default(now()) @db.Date
   user         user?    @relation(fields: [userId], references: [id])
@@ -168,6 +175,7 @@ model courseComment {
   creationDate DateTime @default(now()) @db.Date
   course       course   @relation(fields: [courseId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
+  isActive     Boolean  @default(true)
 }
 
 model lessonComment {
@@ -178,6 +186,7 @@ model lessonComment {
   creationDate DateTime @default(now()) @db.Date
   lesson       lesson   @relation(fields: [lessonId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
+  isActive     Boolean  @default(true)
 }
 
 model postComment {
@@ -188,6 +197,7 @@ model postComment {
   creationDate DateTime @default(now()) @db.Date
   post         post     @relation(fields: [postId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
+  isActive     Boolean  @default(true)
 }
 
 model newsComment {
@@ -198,6 +208,7 @@ model newsComment {
   creationDate DateTime @default(now()) @db.Date
   news         news     @relation(fields: [newsId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
+  isActive     Boolean  @default(true)
 }
 
 model postReport {
@@ -208,4 +219,5 @@ model postReport {
   creationDate DateTime @default(now()) @db.Date
   post         post     @relation(fields: [postId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
+  isActive     Boolean  @default(true)
 }

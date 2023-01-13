@@ -1,51 +1,98 @@
+import { iCourse } from "@models/interfaceCourse";
 import { iCRUD } from "@models/interfaceCRUD";
+import { iError } from "@models/interfaceError";
 import { PrismaClient } from "@prisma/client";
+import { idExtractor } from "@utilities/idExtractor";
 
 const prisma = new PrismaClient();
 
-export default class CourseServerApi implements iCRUD {
-	getAll = async function () {
+export default class CourseServerApi implements iCRUD<iCourse, iError> {
+	async getSome(skip: number, take: number) {
 		try {
-			const courses = await prisma.course.findMany();
-			return courses;
+			const courses = await prisma.course.findMany({
+				skip,
+				take,
+				include: { keywords: true },
+			});
+			return courses as [iCourse];
 		} catch (error) {
-			return { err: "some error on get courses" };
+			return { error: "some error on get courses" };
 		}
-	};
+	}
 
-	getOne = async function (courseId: number) {
+	async getOne(courseId: number) {
 		try {
 			const course = await prisma.course.findUnique({
 				where: { id: courseId },
 				include: {
-					lessons: {
-						select: { title: true, id: true, bannerUrl: true },
-					},
+					lessons: true,
 				},
 			});
 
-			return course;
+			return course as iCourse;
 		} catch (error) {
-			return { err: "some error on get course" };
+			return { error: "some error on get course" };
 		}
-	};
+	}
 
-	create = async function (body: any) {
+	async create(body: any) {
 		try {
-			const queryRes = await prisma.course.create({
-				data: body,
+			const keywordsID = idExtractor(body.keywords as any);
+			const course = await prisma.course.create({
+				data: {
+					title: body.title,
+					description: body.description,
+					bannerUrl: body.bannerUrl,
+					authorId: body.authorId,
+					categoryId: body.categoryId,
+					price: body.price,
+					keywords: {
+						connect: keywordsID,
+					},
+				},
 			});
-			return queryRes;
-		} catch (error: any) {
-			return { err: "some error on create course" };
+			return course as iCourse;
+		} catch (error) {
+			return { error: "some error on create course" };
 		}
-	};
+	}
 
-	async update(courseId: number) {
-		throw new Error("Method not implemented.");
+	async update(courseId: number, body: iCourse) {
+		try {
+			const keywordsID = idExtractor(body.keywords as any);
+			const course = await prisma.course.update({
+				where: { id: courseId },
+				data: {
+					title: body.title,
+					description: body.description,
+					bannerUrl: body.bannerUrl,
+					authorId: body.authorId,
+					categoryId: body.categoryId,
+					price: body.price,
+					keywords: {
+						connect: keywordsID,
+					},
+				},
+			});
+			return course as iCourse;
+		} catch (error) {
+			return {
+				error: "some error on update course, Maybe the title is repetitive",
+			};
+		}
 	}
 
 	async delete(courseId: number) {
-		throw new Error("Method not implemented.");
+		try {
+			const course = await prisma.course.update({
+				where: { id: courseId },
+				data: { isActive: false },
+			});
+			return course as iCourse;
+		} catch (error) {
+			return {
+				error: "some error on delete course, Maybe it has already been deleted",
+			};
+		}
 	}
 }

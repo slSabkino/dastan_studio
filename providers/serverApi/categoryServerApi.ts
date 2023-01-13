@@ -1,40 +1,71 @@
+import { iCategory } from "@models/interfaceCategory";
+import { iError } from "@models/interfaceError";
 import { iCRUD } from "@models/interfaceCRUD";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class CategoryServerApi implements iCRUD {
-	async getAll() {
+export class CategoryServerApi implements iCRUD<iCategory, iError> {
+	async getSome(skip: number, take: number) {
 		try {
-			const categories = await prisma.category.findMany();
-			return categories;
+			const categories = await prisma.category.findMany({ skip, take });
+			return categories as unknown as [iCategory];
 		} catch (error) {
-			return { err: "some error on get category" };
+			return { error: "some error on get category" };
 		}
 	}
 
-	async getOne(courseId: number) {
+	async getOne(categoryId: number) {
 		try {
-			const categories = await prisma.category.findUnique({
+			const category = await prisma.category.findUnique({
 				where: {
-					id: courseId,
+					id: categoryId,
 				},
 			});
-			return categories;
+			return category as iCategory;
 		} catch (error) {
-			return { err: "some error on get category" };
+			return { error: "some error on get category" };
 		}
 	}
 
-	async create(body: any) {
-		throw new Error("Method not implemented.");
+	async create(body: iCategory) {
+		try {
+			const category = await prisma.category.create({
+				data: { title: body.title },
+			});
+			return category as iCategory;
+		} catch (error) {
+			return {
+				error: "some error on create category, Maybe it has already existed",
+			};
+		}
 	}
 
-	async update(courseId: number) {
-		throw new Error("Method not implemented.");
+	async update(categoryId: number, body: iCategory) {
+		try {
+			const category = await prisma.category.update({
+				where: { id: categoryId },
+				data: { title: body.title },
+			});
+			return category as iCategory;
+		} catch (error) {
+			return {
+				error: "some error on update category, Maybe the title is repetitive",
+			};
+		}
 	}
 
-	async delete(courseId: number) {
-		throw new Error("Method not implemented.");
+	async delete(categoryId: number) {
+		try {
+			const category = await prisma.category.update({
+				where: { id: categoryId },
+				data: { isActive: false },
+			});
+			return category as iCategory;
+		} catch (error) {
+			return {
+				error: "some error on delete category, Maybe it has already been deleted",
+			};
+		}
 	}
 }
