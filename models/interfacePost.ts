@@ -1,12 +1,11 @@
-export interface iCourse {
+export interface iPost {
 	id?: number;
 	title: string;
 	description: string;
+	bannerUrl: string;
 	authorId: number;
 	categoryId: number;
-	bannerUrl?: string;
 	isActive?: boolean;
 	creationDate?: Date;
 	updateDate?: Date;
-	price?: number;
 }

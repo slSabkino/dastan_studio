@@ -1,19 +1,21 @@
+import { iCourse } from "@models/interfaceCourse";
 import { iCRUD } from "@models/interfaceCRUD";
+import { iError } from "@models/interfaceError";
 
-export default class CourseServerApi implements iCRUD {
-	async getAll() {
+export default class CourseServerApi implements iCRUD<iCourse, iError> {
+	getSome(skip: number, take: number): Promise<iError | [iCourse]> {
 		throw new Error("Method not implemented.");
 	}
-	async getOne(courseId: number) {
+	getOne(id: number): Promise<iCourse | iError> {
 		throw new Error("Method not implemented.");
 	}
-	async create(body: any) {
+	create(body: iCourse): Promise<iCourse | iError> {
 		throw new Error("Method not implemented.");
 	}
-	async update(courseId: number) {
+	update(id: number, body: iCourse): Promise<iCourse | iError> {
 		throw new Error("Method not implemented.");
 	}
-	async delete(courseId: number) {
+	delete(id: number): Promise<iCourse | iError> {
 		throw new Error("Method not implemented.");
 	}
 }

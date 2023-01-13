@@ -1,8 +1,5 @@
-import { iCategory } from "./interfaceCategory";
-import { iCourse } from "./interfaceCourse";
-
 export interface iUser {
-	id: number;
+	id?: number;
 	firstName: string;
 	lastName: string;
 	username: string;
@@ -13,10 +10,4 @@ export interface iUser {
 	permissionLevel?: number;
 	RegisterDate?: Date;
 	cityId?: number;
-	city?: string;
-	interests?: [iCategory];
-	course?: [iCourse];
-	post?: [];
-	news?: [];
-	adminMessage?: [];
 }

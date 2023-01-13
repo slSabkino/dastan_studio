@@ -1,5 +1,5 @@
 import Account from "@components/account";
-import headerProps from "@models/headerTypes";
+import headerProps from "@models/props/headerTypes";
 import { userAtom } from "@providers/recoilAtoms";
 import { useRecoilState } from "recoil";
 

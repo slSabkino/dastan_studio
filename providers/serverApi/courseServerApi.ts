@@ -14,7 +14,7 @@ export default class CourseServerApi implements iCRUD<iCourse, iError> {
 				take,
 				include: { keywords: true },
 			});
-			return courses as [iCourse];
+			return courses as unknown as [iCourse];
 		} catch (error) {
 			return { error: "some error on get courses" };
 		}
@@ -57,9 +57,9 @@ export default class CourseServerApi implements iCRUD<iCourse, iError> {
 		}
 	}
 
-	async update(courseId: number, body: iCourse) {
+	async update(courseId: number, body: any) {
 		try {
-			const keywordsID = idExtractor(body.keywords as any);
+			const keywordsID = idExtractor(body.keywords);
 			const course = await prisma.course.update({
 				where: { id: courseId },
 				data: {

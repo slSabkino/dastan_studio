@@ -39,7 +39,7 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 		}
 	}
 
-	async create(body: iUser) {
+	async create(body: any) {
 		try {
 			const {
 				email,

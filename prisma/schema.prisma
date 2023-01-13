@@ -170,10 +170,10 @@ model adminMessage {
 model courseComment {
   id           Int      @id @default(autoincrement())
   description  String
-  courseId     Int      @db.SmallInt
+  subjectId    Int      @db.SmallInt
   userId       Int
   creationDate DateTime @default(now()) @db.Date
-  course       course   @relation(fields: [courseId], references: [id])
+  course       course   @relation(fields: [subjectId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
   isActive     Boolean  @default(true)
 }
@@ -181,10 +181,10 @@ model courseComment {
 model lessonComment {
   id           Int      @id @default(autoincrement())
   description  String
-  lessonId     Int
+  subjectId    Int
   userId       Int
   creationDate DateTime @default(now()) @db.Date
-  lesson       lesson   @relation(fields: [lessonId], references: [id])
+  lesson       lesson   @relation(fields: [subjectId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
   isActive     Boolean  @default(true)
 }
@@ -192,10 +192,10 @@ model lessonComment {
 model postComment {
   id           Int      @id @default(autoincrement())
   description  String
-  postId       Int
+  subjectId    Int
   userId       Int
   creationDate DateTime @default(now()) @db.Date
-  post         post     @relation(fields: [postId], references: [id])
+  post         post     @relation(fields: [subjectId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
   isActive     Boolean  @default(true)
 }
@@ -203,10 +203,10 @@ model postComment {
 model newsComment {
   id           Int      @id @default(autoincrement())
   description  String
-  newsId       Int
+  subjectId    Int
   userId       Int
   creationDate DateTime @default(now()) @db.Date
-  news         news     @relation(fields: [newsId], references: [id])
+  news         news     @relation(fields: [subjectId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
   isActive     Boolean  @default(true)
 }
@@ -214,10 +214,10 @@ model newsComment {
 model postReport {
   id           Int      @id @default(autoincrement())
   description  String
-  postId       Int
+  subjectId    Int
   userId       Int
   creationDate DateTime @default(now()) @db.Date
-  post         post     @relation(fields: [postId], references: [id])
+  post         post     @relation(fields: [subjectId], references: [id])
   user         user     @relation(fields: [userId], references: [id])
   isActive     Boolean  @default(true)
 }

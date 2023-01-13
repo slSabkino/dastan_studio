@@ -1,12 +1,11 @@
-export interface iCourse {
+export interface iLesson {
 	id?: number;
 	title: string;
 	description: string;
-	authorId: number;
-	categoryId: number;
-	bannerUrl?: string;
+	bannerUrl: string;
+	videoUrl: string;
+	courseId: number;
 	isActive?: boolean;
 	creationDate?: Date;
 	updateDate?: Date;
-	price?: number;
 }

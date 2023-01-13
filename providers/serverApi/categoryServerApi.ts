@@ -28,7 +28,7 @@ export class CategoryServerApi implements iCRUD<iCategory, iError> {
 		}
 	}
 
-	async create(body: iCategory) {
+	async create(body: any) {
 		try {
 			const category = await prisma.category.create({
 				data: { title: body.title },
@@ -41,7 +41,7 @@ export class CategoryServerApi implements iCRUD<iCategory, iError> {
 		}
 	}
 
-	async update(categoryId: number, body: iCategory) {
+	async update(categoryId: number, body: any) {
 		try {
 			const category = await prisma.category.update({
 				where: { id: categoryId },
