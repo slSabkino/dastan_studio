@@ -9,6 +9,7 @@ export interface iUser {
 	phone: string;
 	email: string;
 	password?: string;
+	isActive?: boolean;
 	permissionLevel?: number;
 	RegisterDate?: Date;
 	cityId?: number;

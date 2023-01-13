@@ -1,16 +1,16 @@
-import { SubCategoryServerApi } from "@providers/serverApi/subCategoryServerApi";
+import { KeywordServerApi } from "@providers/serverApi/keyword";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const subCategoryServerApi = new SubCategoryServerApi();
+	const keywordServerApi = new KeywordServerApi();
 
 	switch (req.method) {
 		case "GET": {
-			const subCategories = await subCategoryServerApi.getSome(
+			const categories = await keywordServerApi.getSome(
 				parseInt(req.query.skip as string),
 				parseInt(req.query.take as string)
 			);
-			res.json(subCategories);
+			res.json(categories);
 			break;
 		}
 

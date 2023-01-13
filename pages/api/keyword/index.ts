@@ -1,12 +1,13 @@
-import UserServerApi from "@providers/serverApi/userServerApi";
+import { KeywordServerApi } from "@providers/serverApi/keyword";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const userServerApi = new UserServerApi();
+	const keywordServerApi = new KeywordServerApi();
+
 	switch (req.method) {
 		case "POST": {
-			const user = await userServerApi.create(req.body);
-			res.json(user);
+			const category = await keywordServerApi.create(req.body);
+			res.json(category);
 			break;
 		}
 

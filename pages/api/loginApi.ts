@@ -5,7 +5,7 @@ import { serialize } from "cookie";
 
 const prisma = new PrismaClient();
 
-export default async function userApi(req: NextApiRequest, res: NextApiResponse) {
+export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case "GET": {
 			res.json({ cookie: req.cookies });

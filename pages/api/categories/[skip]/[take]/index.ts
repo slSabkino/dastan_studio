@@ -1,7 +1,7 @@
 import { CategoryServerApi } from "@providers/serverApi/categoryServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function lessonApiID(req: NextApiRequest, res: NextApiResponse) {
+export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	const categoryServerApi = new CategoryServerApi();
 
 	switch (req.method) {

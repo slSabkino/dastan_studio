@@ -1,7 +1,7 @@
 import CourseServerApi from "@providers/serverApi/courseServerApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function coursesHandler(req: NextApiRequest, res: NextApiResponse) {
+export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	const courseServerApi = new CourseServerApi();
 
 	switch (req.method) {

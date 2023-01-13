@@ -8,8 +8,8 @@ const prisma = new PrismaClient();
 export class SubCategoryServerApi implements iCRUD<iSubCategory, iError> {
 	async getSome(skip: number, take: number) {
 		try {
-			const categories = await prisma.subCategory.findMany({ skip, take });
-			return categories as [iSubCategory];
+			const subCategory = await prisma.subCategory.findMany({ skip, take });
+			return subCategory as [iSubCategory];
 		} catch (error) {
 			return { error: "some error on get subCategory" };
 		}
@@ -17,12 +17,12 @@ export class SubCategoryServerApi implements iCRUD<iSubCategory, iError> {
 
 	async getOne(subCategoryId: number) {
 		try {
-			const categories = await prisma.subCategory.findUnique({
+			const subCategory = await prisma.subCategory.findUnique({
 				where: {
 					id: subCategoryId,
 				},
 			});
-			return categories as iSubCategory;
+			return subCategory as iSubCategory;
 		} catch (error) {
 			return { error: "some error on get subCategory" };
 		}
