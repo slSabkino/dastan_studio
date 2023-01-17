@@ -6,14 +6,14 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 	switch (req.method) {
 		case "PUT": {
-			const subCategories = await subCategoryPrismaProvider.getSome(req.body);
-			res.json(subCategories);
+			const data = await subCategoryPrismaProvider.getSome(req.body);
+			res.json(data);
 			break;
 		}
 
 		case "POST": {
-			const subCategory = await subCategoryPrismaProvider.create(req.body);
-			res.json(subCategory);
+			const data = await subCategoryPrismaProvider.create(req.body);
+			res.json(data);
 			break;
 		}
 

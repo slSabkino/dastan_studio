@@ -5,14 +5,14 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const userPrismaProvider = new UserPrismaProvider();
 	switch (req.method) {
 		case "PUT": {
-			const user = await userPrismaProvider.getSome(req.body);
-			res.json(user);
+			const data = await userPrismaProvider.getSome(req.body);
+			res.json(data);
 			break;
 		}
 
 		case "POST": {
-			const user = await userPrismaProvider.create(req.body);
-			res.json(user);
+			const data = await userPrismaProvider.create(req.body);
+			res.json(data);
 			break;
 		}
 

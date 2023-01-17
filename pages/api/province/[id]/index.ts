@@ -6,27 +6,27 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 	switch (req.method) {
 		case "GET": {
-			const province = await provincePrismaProvider.getOne(
+			const data = await provincePrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
-			res.json(province);
+			res.json(data);
 			break;
 		}
 
 		case "PUT": {
-			const province = await provincePrismaProvider.update(
+			const data = await provincePrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
-			res.json(province);
+			res.json(data);
 			break;
 		}
 
 		case "DELETE": {
-			const province = await provincePrismaProvider.delete(
+			const data = await provincePrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
-			res.json(province);
+			res.json(data);
 			break;
 		}
 

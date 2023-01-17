@@ -6,27 +6,27 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 	switch (req.method) {
 		case "GET": {
-			const keyword = await keywordPrismaProvider.getOne(
+			const data = await keywordPrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
-			res.json(keyword);
+			res.json(data);
 			break;
 		}
 
 		case "PUT": {
-			const keyword = await keywordPrismaProvider.update(
+			const data = await keywordPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
-			res.json(keyword);
+			res.json(data);
 			break;
 		}
 
 		case "DELETE": {
-			const keyword = await keywordPrismaProvider.delete(
+			const data = await keywordPrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
-			res.json(keyword);
+			res.json(data);
 			break;
 		}
 

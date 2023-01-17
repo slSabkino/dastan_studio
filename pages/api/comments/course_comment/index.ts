@@ -6,14 +6,14 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 	switch (req.method) {
 		case "PUT": {
-			const categories = await courseCommentPrismaProvider.getSome(req.body);
-			res.json(categories);
+			const data = await courseCommentPrismaProvider.getSome(req.body);
+			res.json(data);
 			break;
 		}
 
 		case "POST": {
-			const category = await courseCommentPrismaProvider.create(req.body);
-			res.json(category);
+			const data = await courseCommentPrismaProvider.create(req.body);
+			res.json(data);
 			break;
 		}
 
