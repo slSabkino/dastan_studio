@@ -1,4 +1,4 @@
-import { CityPrismaProvider } from "@providers/prismaProvider/cityPrismaProvider";
+import { CityPrismaProvider } from "@providers/prismaProviders/cityPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {

@@ -1,4 +1,4 @@
-import { SubCategoryPrismaProvider } from "@providers/prismaProvider/subCategoryPrismaProvider";
+import { SubCategoryPrismaProvider } from "@providers/prismaProviders/subCategoryPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {

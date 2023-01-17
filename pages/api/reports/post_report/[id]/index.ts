@@ -1,4 +1,4 @@
-import { PostReportPrismaProvider } from "@providers/prismaProvider/postReportPrismaProvider";
+import { PostReportPrismaProvider } from "@providers/prismaProviders/postReportPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {

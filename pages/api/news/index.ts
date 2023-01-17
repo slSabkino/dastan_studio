@@ -1,4 +1,4 @@
-import { NewsPrismaProvider } from "@providers/prismaProvider/newsPrismaProvider";
+import { NewsPrismaProvider } from "@providers/prismaProviders/newsPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {

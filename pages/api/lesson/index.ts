@@ -1,4 +1,4 @@
-import { LessonPrismaProvider } from "@providers/prismaProvider/lessonPrismaProvider";
+import { LessonPrismaProvider } from "@providers/prismaProviders/lessonPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
