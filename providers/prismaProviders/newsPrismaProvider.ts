@@ -22,6 +22,10 @@ export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 		try {
 			const response = await prisma.news.findUnique({
 				where: { id },
+				include: {
+					category: true,
+					comments: true,
+				},
 			});
 			return response as unknown as iNews;
 		} catch (error) {
