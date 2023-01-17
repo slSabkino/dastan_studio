@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 	async getSome(body: any): Promise<iError | [iNews]> {
 		try {
-			const response = await prisma.post.findMany({
+			const response = await prisma.news.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
@@ -20,7 +20,7 @@ export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 
 	async getOne(id: number): Promise<iNews | iError> {
 		try {
-			const response = await prisma.post.findUnique({
+			const response = await prisma.news.findUnique({
 				where: { id },
 			});
 			return response as unknown as iNews;
@@ -31,7 +31,7 @@ export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 
 	async create(body: any): Promise<iNews | iError> {
 		try {
-			const response = await prisma.post.create({
+			const response = await prisma.news.create({
 				data: {
 					title: body.title,
 					description: body.description,
@@ -48,7 +48,7 @@ export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 
 	async update(id: number, body: any): Promise<iNews | iError> {
 		try {
-			const response = await prisma.post.update({
+			const response = await prisma.news.update({
 				where: {
 					id,
 				},
@@ -67,7 +67,7 @@ export class NewsPrismaProvider implements iCRUD<iNews, iError> {
 
 	async delete(id: number): Promise<iNews | iError> {
 		try {
-			const response = await prisma.post.update({
+			const response = await prisma.news.update({
 				where: {
 					id,
 				},
