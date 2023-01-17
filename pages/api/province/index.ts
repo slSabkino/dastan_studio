@@ -5,6 +5,12 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const provinceServerApi = new ProvinceServerApi();
 
 	switch (req.method) {
+		case "PUT": {
+			const provinces = await provinceServerApi.getSome(req.body);
+			res.json(provinces);
+			break;
+		}
+
 		case "POST": {
 			const province = await provinceServerApi.create(req.body);
 			res.json(province);

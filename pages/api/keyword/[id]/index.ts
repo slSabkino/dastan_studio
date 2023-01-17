@@ -7,7 +7,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	switch (req.method) {
 		case "GET": {
 			const keyword = await keywordServerApi.getOne(
-				parseInt(req.query.keyword_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(keyword);
 			break;
@@ -15,7 +15,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "PUT": {
 			const keyword = await keywordServerApi.update(
-				parseInt(req.query.keyword_id as string),
+				parseInt(req.query.id as string),
 				req.body
 			);
 			res.json(keyword);
@@ -24,7 +24,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "DELETE": {
 			const keyword = await keywordServerApi.delete(
-				parseInt(req.query.keyword_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(keyword);
 			break;

@@ -7,7 +7,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	switch (req.method) {
 		case "GET": {
 			const province = await provinceServerApi.getOne(
-				parseInt(req.query.province_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(province);
 			break;
@@ -15,7 +15,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "PUT": {
 			const province = await provinceServerApi.update(
-				parseInt(req.query.province_id as string),
+				parseInt(req.query.id as string),
 				req.body
 			);
 			res.json(province);
@@ -24,7 +24,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "DELETE": {
 			const province = await provinceServerApi.delete(
-				parseInt(req.query.province_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(province);
 			break;

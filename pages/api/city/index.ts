@@ -5,6 +5,11 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const cityServerApi = new CityServerApi();
 
 	switch (req.method) {
+		case "PUT": {
+			const cities = await cityServerApi.getSome(req.body);
+			res.json(cities);
+			break;
+		}
 		case "POST": {
 			const city = await cityServerApi.create(req.body);
 			res.json(city);

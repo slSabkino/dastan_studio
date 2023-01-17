@@ -1,7 +1,15 @@
 export interface iCRUD<T, E> {
-	getSome(skip: number, take: number): Promise<[T] | E>;
+	getSome(body: any): Promise<[T] | E>;
 	getOne(id: number): Promise<T | E>;
-	create(body: T): Promise<T | E>;
-	update(id: number, body: T): Promise<T | E>;
+	create(body: any): Promise<T | E>;
+	update(id: number, body: any): Promise<T | E>;
+	delete(id: number): Promise<T | E>;
+}
+
+export interface iCrudDepend<T, E> {
+	getSome(body: any): Promise<[T] | E>;
+	getOne(id: number): Promise<T | E>;
+	create(body: any): Promise<T | E>;
+	update(id: number, body: any): Promise<T | E>;
 	delete(id: number): Promise<T | E>;
 }

@@ -7,7 +7,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	switch (req.method) {
 		case "GET": {
 			const course = await courseServerApi.getOne(
-				parseInt(req.query.course_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(course);
 			break;
@@ -15,7 +15,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "PUT": {
 			const course = await courseServerApi.update(
-				parseInt(req.query.course_id as string),
+				parseInt(req.query.id as string),
 				req.body
 			);
 			res.json(course);
@@ -24,7 +24,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "DELETE": {
 			const course = await courseServerApi.delete(
-				parseInt(req.query.course_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(course);
 			break;

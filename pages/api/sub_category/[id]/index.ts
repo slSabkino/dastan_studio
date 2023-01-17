@@ -7,7 +7,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	switch (req.method) {
 		case "GET": {
 			const subCategory = await subCategoryServerApi.getOne(
-				parseInt(req.query.sub_category_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(subCategory);
 			break;
@@ -15,7 +15,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "PUT": {
 			const subCategory = await subCategoryServerApi.update(
-				parseInt(req.query.sub_category_id as string),
+				parseInt(req.query.id as string),
 				req.body
 			);
 			res.json(subCategory);
@@ -24,7 +24,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "DELETE": {
 			const subCategory = await subCategoryServerApi.delete(
-				parseInt(req.query.sub_category_id as string)
+				parseInt(req.query.id as string)
 			);
 			res.json(subCategory);
 			break;

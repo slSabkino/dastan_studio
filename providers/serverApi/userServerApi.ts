@@ -7,11 +7,11 @@ import { idExtractor } from "@utilities/idExtractor";
 const prisma = new PrismaClient();
 
 export default class UserServerApi implements iCRUD<iUser, iError> {
-	async getSome(skip: number, take: number) {
+	async getSome(body: any) {
 		try {
 			const users = await prisma.user.findMany({
-				take,
-				skip,
+				skip: body.skip,
+				take: body.take,
 			});
 			return users as unknown as [iUser];
 		} catch (error) {

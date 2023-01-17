@@ -6,11 +6,23 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 	switch (req.method) {
 		case "GET": {
-			const cities = await cityServerApi.getSome(
-				parseInt(req.query.skip as string),
-				parseInt(req.query.take as string)
+			const city = await cityServerApi.getOne(parseInt(req.query.id as string));
+			res.json(city);
+			break;
+		}
+
+		case "PUT": {
+			const city = await cityServerApi.update(
+				parseInt(req.query.id as string),
+				req.body
 			);
-			res.json(cities);
+			res.json(city);
+			break;
+		}
+
+		case "DELETE": {
+			const city = await cityServerApi.delete(parseInt(req.query.id as string));
+			res.json(city);
 			break;
 		}
 

@@ -6,10 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class CityServerApi implements iCRUD<iCity, iError> {
-	async getSome(skip: number, take: number) {
+	async getSome(body: any) {
 		try {
-			const cities = await prisma.city.findMany({ skip, take });
-			return cities as unknown as [iCity];
+			const cities = await prisma.city.findMany({
+				skip: body.skip,
+				take: body.take,
+			});
+			return cities as [iCity];
 		} catch (error) {
 			return { error: "some error on get city" };
 		}

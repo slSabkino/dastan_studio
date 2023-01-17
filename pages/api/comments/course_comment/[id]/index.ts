@@ -5,14 +5,27 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const categoryServerApi = new CategoryServerApi();
 
 	switch (req.method) {
-		case "PUT": {
-			const categories = await categoryServerApi.getSome(req.body);
-			res.json(categories);
+		case "GET": {
+			const category = await categoryServerApi.getOne(
+				parseInt(req.query.id as string)
+			);
+			res.json(category);
 			break;
 		}
 
-		case "POST": {
-			const category = await categoryServerApi.create(req.body);
+		case "PUT": {
+			const category = await categoryServerApi.update(
+				parseInt(req.query.id as string),
+				req.body
+			);
+			res.json(category);
+			break;
+		}
+
+		case "DELETE": {
+			const category = await categoryServerApi.delete(
+				parseInt(req.query.id as string)
+			);
 			res.json(category);
 			break;
 		}

@@ -5,6 +5,12 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const keywordServerApi = new KeywordServerApi();
 
 	switch (req.method) {
+		case "PUT": {
+			const categories = await keywordServerApi.getSome(req.body);
+			res.json(categories);
+			break;
+		}
+
 		case "POST": {
 			const category = await keywordServerApi.create(req.body);
 			res.json(category);

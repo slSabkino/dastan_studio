@@ -5,6 +5,12 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	const courseServerApi = new CourseServerApi();
 
 	switch (req.method) {
+		case "PUT": {
+			const courses = await courseServerApi.getSome(req.body);
+			res.json(courses);
+			break;
+		}
+
 		case "POST": {
 			const course = await courseServerApi.create(req.body);
 			res.json(course);

@@ -6,9 +6,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class CategoryServerApi implements iCRUD<iCategory, iError> {
-	async getSome(skip: number, take: number) {
+	async getSome(body: any) {
 		try {
-			const categories = await prisma.category.findMany({ skip, take });
+			const categories = await prisma.category.findMany({
+				skip: body.skip,
+				take: body.take,
+			});
 			return categories as unknown as [iCategory];
 		} catch (error) {
 			return { error: "some error on get category" };

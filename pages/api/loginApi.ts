@@ -10,6 +10,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		case "GET": {
 			res.json({ cookie: req.cookies });
 		}
+
 		case "POST": {
 			try {
 				console.log("create user : ", req.body);
