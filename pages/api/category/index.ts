@@ -1,18 +1,18 @@
-import { CategoryServerApi } from "@providers/serverApi/categoryServerApi";
+import { CategoryPrismaProvider } from "@providers/prismaProvider/categoryPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const categoryServerApi = new CategoryServerApi();
+	const categoryPrismaProvider = new CategoryPrismaProvider();
 
 	switch (req.method) {
 		case "PUT": {
-			const categories = await categoryServerApi.getSome(req.body);
+			const categories = await categoryPrismaProvider.getSome(req.body);
 			res.json(categories);
 			break;
 		}
 
 		case "POST": {
-			const category = await categoryServerApi.create(req.body);
+			const category = await categoryPrismaProvider.create(req.body);
 			res.json(category);
 			break;
 		}

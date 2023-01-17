@@ -1,18 +1,18 @@
-import { KeywordPrismaProvider } from "@providers/prismaProvider/keywordPrismaProvider";
+import { PostReportPrismaProvider } from "@providers/prismaProvider/postReportPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const keywordPrismaProvider = new KeywordPrismaProvider();
+	const postReportPrismaProvider = new PostReportPrismaProvider();
 
 	switch (req.method) {
 		case "PUT": {
-			const categories = await keywordPrismaProvider.getSome(req.body);
+			const categories = await postReportPrismaProvider.getSome(req.body);
 			res.json(categories);
 			break;
 		}
 
 		case "POST": {
-			const category = await keywordPrismaProvider.create(req.body);
+			const category = await postReportPrismaProvider.create(req.body);
 			res.json(category);
 			break;
 		}

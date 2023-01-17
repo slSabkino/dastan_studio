@@ -1,18 +1,18 @@
-import CourseServerApi from "@providers/serverApi/courseServerApi";
+import CoursePrismaProvider from "@providers/prismaProvider/coursePrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const courseServerApi = new CourseServerApi();
+	const coursePrismaProvider = new CoursePrismaProvider();
 
 	switch (req.method) {
 		case "PUT": {
-			const courses = await courseServerApi.getSome(req.body);
+			const courses = await coursePrismaProvider.getSome(req.body);
 			res.json(courses);
 			break;
 		}
 
 		case "POST": {
-			const course = await courseServerApi.create(req.body);
+			const course = await coursePrismaProvider.create(req.body);
 			res.json(course);
 			break;
 		}

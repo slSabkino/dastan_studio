@@ -1,50 +1,53 @@
 import { iComment } from "@models/interfaceComment";
-import { iCrudDepend } from "@models/interfaceCRUD";
+import { iCRUD } from "@models/interfaceCRUD";
 import { iError } from "@models/interfaceError";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class CourseCommntServerApi implements iCrudDepend<iComment, iError> {
+export class LessonCommentPrismaProvider implements iCRUD<iComment, iError> {
 	async getSome(body: any): Promise<iError | [iComment]> {
 		try {
-			const courseComments = await prisma.courseComment.findMany({
+			const response = await prisma.lessonComment.findMany({
 				where: { subjectId: body.subjectId },
 				skip: body.skip,
 				take: body.take,
 			});
-			return courseComments as [iComment];
+			return response as unknown as [iComment];
 		} catch (error) {
 			return { error: "some error on get course comments" };
 		}
 	}
+
 	async getOne(id: number): Promise<iComment | iError> {
 		try {
-			const courseComment = await prisma.courseComment.findUnique({
+			const response = await prisma.lessonComment.findUnique({
 				where: { id },
 			});
-			return courseComment as iComment;
+			return response as unknown as iComment;
 		} catch (error) {
 			return { error: "some error on get course comment" };
 		}
 	}
+
 	async create(body: any): Promise<iComment | iError> {
 		try {
-			const courseCommnet = await prisma.courseComment.create({
+			const response = await prisma.lessonComment.create({
 				data: {
 					description: body.description,
 					subjectId: body.subjectId,
 					userId: body.userId,
 				},
 			});
-			return courseCommnet;
+			return response as unknown as iComment;
 		} catch (error) {
-			return { error: "some error on create course commnet" };
+			return { error: "some error on create course comment" };
 		}
 	}
+
 	async update(id: number, body: any): Promise<iComment | iError> {
 		try {
-			const courseCommnet = await prisma.courseComment.update({
+			const response = await prisma.lessonComment.update({
 				where: {
 					id,
 				},
@@ -52,14 +55,15 @@ export class CourseCommntServerApi implements iCrudDepend<iComment, iError> {
 					description: body.description,
 				},
 			});
-			return courseCommnet;
+			return response as unknown as iComment;
 		} catch (error) {
-			return { error: "some error on update course commnet" };
+			return { error: "some error on update course comment" };
 		}
 	}
+
 	async delete(id: number): Promise<iComment | iError> {
 		try {
-			const courseCommnet = await prisma.courseComment.update({
+			const response = await prisma.lessonComment.update({
 				where: {
 					id,
 				},
@@ -67,9 +71,9 @@ export class CourseCommntServerApi implements iCrudDepend<iComment, iError> {
 					isActive: false,
 				},
 			});
-			return courseCommnet;
+			return response as unknown as iComment;
 		} catch (error) {
-			return { error: "some error on delete course commnet" };
+			return { error: "some error on delete course comment" };
 		}
 	}
 }

@@ -1,12 +1,12 @@
-import { KeywordServerApi } from "@providers/serverApi/keywordServerApi";
+import { KeywordPrismaProvider } from "@providers/prismaProvider/keywordPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const keywordServerApi = new KeywordServerApi();
+	const keywordPrismaProvider = new KeywordPrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const keyword = await keywordServerApi.getOne(
+			const keyword = await keywordPrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
 			res.json(keyword);
@@ -14,7 +14,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "PUT": {
-			const keyword = await keywordServerApi.update(
+			const keyword = await keywordPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -23,7 +23,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const keyword = await keywordServerApi.delete(
+			const keyword = await keywordPrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
 			res.json(keyword);

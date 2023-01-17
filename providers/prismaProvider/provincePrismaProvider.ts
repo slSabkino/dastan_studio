@@ -5,40 +5,40 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class ProvinceServerApi implements iCRUD<iProvince, iError> {
-	async getSome(body: any) {
+export class ProvincePrismaProvider implements iCRUD<iProvince, iError> {
+	async getSome(body: any): Promise<[iProvince] | iError> {
 		try {
-			const provinces = await prisma.province.findMany({
+			const response = await prisma.province.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return provinces as unknown as [iProvince];
+			return response as unknown as [iProvince];
 		} catch (error) {
 			return { error: "some error on get province" };
 		}
 	}
 
-	async getOne(provinceId: number) {
+	async getOne(provinceId: number): Promise<iProvince | iError> {
 		try {
-			const province = await prisma.province.findUnique({
+			const response = await prisma.province.findUnique({
 				where: {
 					id: provinceId,
 				},
 			});
-			return province as iProvince;
+			return response as unknown as iProvince;
 		} catch (error) {
 			return { error: "some error on get province" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iProvince | iError> {
 		try {
-			const province = await prisma.province.create({
+			const response = await prisma.province.create({
 				data: {
 					title: body.title as string,
 				},
 			});
-			return province as iProvince;
+			return response as unknown as iProvince;
 		} catch (error) {
 			return {
 				error: "some error on create province, Maybe it has already existed",
@@ -46,15 +46,15 @@ export class ProvinceServerApi implements iCRUD<iProvince, iError> {
 		}
 	}
 
-	async update(provinceId: number, body: any) {
+	async update(provinceId: number, body: any): Promise<iProvince | iError> {
 		try {
-			const province = await prisma.province.update({
+			const response = await prisma.province.update({
 				where: { id: provinceId },
 				data: {
 					title: body.title,
 				},
 			});
-			return province as iProvince;
+			return response as unknown as iProvince;
 		} catch (error) {
 			return {
 				error: "some error on update province, Maybe the title is repetitive",
@@ -62,13 +62,13 @@ export class ProvinceServerApi implements iCRUD<iProvince, iError> {
 		}
 	}
 
-	async delete(provinceId: number) {
+	async delete(provinceId: number): Promise<iProvince | iError> {
 		try {
-			const province = await prisma.province.update({
+			const response = await prisma.province.update({
 				where: { id: provinceId },
 				data: { isActive: false },
 			});
-			return province as iProvince;
+			return response as unknown as iProvince;
 		} catch (error) {
 			return {
 				error: "some error on delete province, Maybe it has already been deleted",

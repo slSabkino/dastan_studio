@@ -5,41 +5,41 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class CityServerApi implements iCRUD<iCity, iError> {
-	async getSome(body: any) {
+export class CityPrismaProvider implements iCRUD<iCity, iError> {
+	async getSome(body: any): Promise<iError | [iCity]> {
 		try {
-			const cities = await prisma.city.findMany({
+			const response = await prisma.city.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return cities as [iCity];
+			return response as unknown as [iCity];
 		} catch (error) {
 			return { error: "some error on get city" };
 		}
 	}
 
-	async getOne(cityId: number) {
+	async getOne(cityId: number): Promise<iCity | iError> {
 		try {
-			const city = await prisma.city.findUnique({
+			const response = await prisma.city.findUnique({
 				where: {
 					id: cityId,
 				},
 			});
-			return city as iCity;
+			return response as unknown as iCity;
 		} catch (error) {
 			return { error: "some error on get city" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iCity | iError> {
 		try {
-			const city = await prisma.city.create({
+			const response = await prisma.city.create({
 				data: {
 					title: body.title as string,
 					provinceId: body.provinceId,
 				},
 			});
-			return city as iCity;
+			return response as unknown as iCity;
 		} catch (error) {
 			return {
 				error: "some error on create city, Maybe it has already existed",
@@ -47,15 +47,15 @@ export class CityServerApi implements iCRUD<iCity, iError> {
 		}
 	}
 
-	async update(cityId: number, body: any) {
+	async update(cityId: number, body: any): Promise<iCity | iError> {
 		try {
-			const city = await prisma.city.update({
+			const response = await prisma.city.update({
 				where: { id: cityId },
 				data: {
 					title: body.title,
 				},
 			});
-			return city as iCity;
+			return response as unknown as iCity;
 		} catch (error) {
 			return {
 				error: "some error on update city, Maybe the title is repetitive",
@@ -63,13 +63,13 @@ export class CityServerApi implements iCRUD<iCity, iError> {
 		}
 	}
 
-	async delete(cityId: number) {
+	async delete(cityId: number): Promise<iCity | iError> {
 		try {
-			const city = await prisma.city.update({
+			const response = await prisma.city.update({
 				where: { id: cityId },
 				data: { isActive: false },
 			});
-			return city as iCity;
+			return response as unknown as iCity;
 		} catch (error) {
 			return {
 				error: "some error on delete city, Maybe it has already been deleted",

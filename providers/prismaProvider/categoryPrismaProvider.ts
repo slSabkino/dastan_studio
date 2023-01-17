@@ -5,38 +5,38 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class CategoryServerApi implements iCRUD<iCategory, iError> {
-	async getSome(body: any) {
+export class CategoryPrismaProvider implements iCRUD<iCategory, iError> {
+	async getSome(body: any): Promise<iError | [iCategory]> {
 		try {
-			const categories = await prisma.category.findMany({
+			const response = await prisma.category.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return categories as unknown as [iCategory];
+			return response as unknown as [iCategory];
 		} catch (error) {
 			return { error: "some error on get category" };
 		}
 	}
 
-	async getOne(categoryId: number) {
+	async getOne(categoryId: number): Promise<iCategory | iError> {
 		try {
-			const category = await prisma.category.findUnique({
+			const response = await prisma.category.findUnique({
 				where: {
 					id: categoryId,
 				},
 			});
-			return category as iCategory;
+			return response as unknown as iCategory;
 		} catch (error) {
 			return { error: "some error on get category" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iCategory | iError> {
 		try {
-			const category = await prisma.category.create({
+			const response = await prisma.category.create({
 				data: { title: body.title },
 			});
-			return category as iCategory;
+			return response as unknown as iCategory;
 		} catch (error) {
 			return {
 				error: "some error on create category, Maybe it has already existed",
@@ -44,13 +44,13 @@ export class CategoryServerApi implements iCRUD<iCategory, iError> {
 		}
 	}
 
-	async update(categoryId: number, body: any) {
+	async update(categoryId: number, body: any): Promise<iCategory | iError> {
 		try {
-			const category = await prisma.category.update({
+			const response = await prisma.category.update({
 				where: { id: categoryId },
 				data: { title: body.title },
 			});
-			return category as iCategory;
+			return response as unknown as iCategory;
 		} catch (error) {
 			return {
 				error: "some error on update category, Maybe the title is repetitive",
@@ -58,13 +58,13 @@ export class CategoryServerApi implements iCRUD<iCategory, iError> {
 		}
 	}
 
-	async delete(categoryId: number) {
+	async delete(categoryId: number): Promise<iCategory | iError> {
 		try {
-			const category = await prisma.category.update({
+			const response = await prisma.category.update({
 				where: { id: categoryId },
 				data: { isActive: false },
 			});
-			return category as iCategory;
+			return response as unknown as iCategory;
 		} catch (error) {
 			return {
 				error: "some error on delete category, Maybe it has already been deleted",

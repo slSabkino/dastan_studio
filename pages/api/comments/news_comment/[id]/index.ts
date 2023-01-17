@@ -1,32 +1,32 @@
-import { CityPrismaProvider } from "@providers/prismaProvider/cityPrismaProvider";
+import { NewsCommentPrismaProvider } from "@providers/prismaProvider/newsCommentPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const cityPrismaProvider = new CityPrismaProvider();
+	const newsCommentPrismaProvider = new NewsCommentPrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const city = await cityPrismaProvider.getOne(
+			const data = await newsCommentPrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
-			res.json(city);
+			res.json(data);
 			break;
 		}
 
 		case "PUT": {
-			const city = await cityPrismaProvider.update(
+			const data = await newsCommentPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
-			res.json(city);
+			res.json(data);
 			break;
 		}
 
 		case "DELETE": {
-			const city = await cityPrismaProvider.delete(
+			const data = await newsCommentPrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
-			res.json(city);
+			res.json(data);
 			break;
 		}
 

@@ -1,18 +1,20 @@
-import UserServerApi from "@providers/serverApi/userServerApi";
+import UserPrismaProvider from "@providers/prismaProvider/userPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const userServerApi = new UserServerApi();
+	const userPrismaProvider = new UserPrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const user = await userServerApi.getOne(parseInt(req.query.id as string));
+			const user = await userPrismaProvider.getOne(
+				parseInt(req.query.id as string)
+			);
 			res.json(user);
 			break;
 		}
 
 		case "PUT": {
-			const user = await userServerApi.update(
+			const user = await userPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -21,7 +23,9 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const user = await userServerApi.delete(parseInt(req.query.id as string));
+			const user = await userPrismaProvider.delete(
+				parseInt(req.query.id as string)
+			);
 			res.json(user);
 			break;
 		}

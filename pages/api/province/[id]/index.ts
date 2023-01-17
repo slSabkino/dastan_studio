@@ -1,12 +1,12 @@
-import { ProvinceServerApi } from "@providers/serverApi/provinceServerApi";
+import { ProvincePrismaProvider } from "@providers/prismaProvider/provincePrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const provinceServerApi = new ProvinceServerApi();
+	const provincePrismaProvider = new ProvincePrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const province = await provinceServerApi.getOne(
+			const province = await provincePrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
 			res.json(province);
@@ -14,7 +14,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "PUT": {
-			const province = await provinceServerApi.update(
+			const province = await provincePrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -23,7 +23,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const province = await provinceServerApi.delete(
+			const province = await provincePrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
 			res.json(province);

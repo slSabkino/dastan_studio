@@ -10,4 +10,13 @@ export interface iUser {
 	permissionLevel?: number;
 	RegisterDate?: Date;
 	cityId?: number;
+
+	//related
+	city?: any;
+	interests?: [any];
+	course?: [any];
+	post?: [any];
+	news?: [any];
+	adminMessage?: [any];
+	PurchasedCourses?: [any];
 }

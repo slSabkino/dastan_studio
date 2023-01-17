@@ -6,22 +6,22 @@ import { idExtractor } from "@utilities/idExtractor";
 
 const prisma = new PrismaClient();
 
-export default class UserServerApi implements iCRUD<iUser, iError> {
-	async getSome(body: any) {
+export default class UserPrismaProvider implements iCRUD<iUser, iError> {
+	async getSome(body: any): Promise<[iUser] | iError> {
 		try {
-			const users = await prisma.user.findMany({
+			const response = await prisma.user.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return users as unknown as [iUser];
+			return response as unknown as [iUser];
 		} catch (error) {
 			return { error: "some error on get users" };
 		}
 	}
 
-	async getOne(userId: number) {
+	async getOne(userId: number): Promise<iUser | iError> {
 		try {
-			const users = await prisma.user.findUnique({
+			const response = await prisma.user.findUnique({
 				where: { id: userId },
 				select: {
 					email: true,
@@ -33,13 +33,13 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 					interests: {},
 				},
 			});
-			return users as unknown as iUser;
+			return response as unknown as iUser;
 		} catch (error) {
 			return { error: "some error on get user" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iUser | iError> {
 		try {
 			const {
 				email,
@@ -68,7 +68,7 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 				return { error: "this phone number already exist" };
 			}
 
-			const user = await prisma.user.create({
+			const response = await prisma.user.create({
 				data: {
 					firstName,
 					lastName,
@@ -83,13 +83,13 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 				},
 			});
 
-			return user as iUser;
+			return response as unknown as iUser;
 		} catch (error: any) {
 			return { error: "some error on create user" };
 		}
 	}
 
-	async update(userId: number, body: any) {
+	async update(userId: number, body: any): Promise<iUser | iError> {
 		try {
 			const {
 				email,
@@ -124,7 +124,7 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 				}
 			}
 
-			const user = await prisma.user.update({
+			const response = await prisma.user.update({
 				where: { id: userId },
 				data: {
 					firstName,
@@ -140,19 +140,19 @@ export default class UserServerApi implements iCRUD<iUser, iError> {
 				},
 			});
 
-			return user as iUser;
+			return response as unknown as iUser;
 		} catch (error: any) {
 			return { error: "some error on update user" };
 		}
 	}
 
-	async delete(userId: number) {
+	async delete(userId: number): Promise<iUser | iError> {
 		try {
-			const subCategory = await prisma.user.update({
+			const response = await prisma.user.update({
 				where: { id: userId },
 				data: { isActive: false },
 			});
-			return subCategory as iUser;
+			return response as unknown as iUser;
 		} catch (error) {
 			return {
 				error: "some error on delete user, Maybe it has already been deleted",

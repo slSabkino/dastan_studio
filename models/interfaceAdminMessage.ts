@@ -6,4 +6,7 @@ export interface iAdminMessage {
 	isActive?: boolean;
 	isReaded?: boolean;
 	creationDate?: Date;
+
+	// related
+	user?: any;
 }

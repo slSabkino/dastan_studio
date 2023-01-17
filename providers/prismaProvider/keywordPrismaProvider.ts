@@ -5,40 +5,40 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class KeywordServerApi implements iCRUD<iKeyword, iError> {
-	async getSome(body: any) {
+export class KeywordPrismaProvider implements iCRUD<iKeyword, iError> {
+	async getSome(body: any): Promise<[iKeyword] | iError> {
 		try {
-			const keywords = await prisma.keyword.findMany({
+			const response = await prisma.keyword.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return keywords as unknown as [iKeyword];
+			return response as unknown as [iKeyword];
 		} catch (error) {
-			return { error: "some error on get keyword" };
+			return { error: "some error on get keywords" };
 		}
 	}
 
-	async getOne(keywordId: number) {
+	async getOne(keywordId: number): Promise<iKeyword | iError> {
 		try {
-			const keyword = await prisma.keyword.findUnique({
+			const response = await prisma.keyword.findUnique({
 				where: {
 					id: keywordId,
 				},
 			});
-			return keyword as iKeyword;
+			return response as unknown as iKeyword;
 		} catch (error) {
 			return { error: "some error on get keyword" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iKeyword | iError> {
 		try {
-			const keyword = await prisma.keyword.create({
+			const response = await prisma.keyword.create({
 				data: {
 					title: body.title as string,
 				},
 			});
-			return keyword as iKeyword;
+			return response as unknown as iKeyword;
 		} catch (error) {
 			return {
 				error: "some error on create keyword, Maybe it has already existed",
@@ -46,15 +46,15 @@ export class KeywordServerApi implements iCRUD<iKeyword, iError> {
 		}
 	}
 
-	async update(keywordId: number, body: any) {
+	async update(keywordId: number, body: any): Promise<iKeyword | iError> {
 		try {
-			const keyword = await prisma.keyword.update({
+			const response = await prisma.keyword.update({
 				where: { id: keywordId },
 				data: {
 					title: body.title,
 				},
 			});
-			return keyword as iKeyword;
+			return response as unknown as iKeyword;
 		} catch (error) {
 			return {
 				error: "some error on update keyword, Maybe the title is repetitive",
@@ -62,13 +62,13 @@ export class KeywordServerApi implements iCRUD<iKeyword, iError> {
 		}
 	}
 
-	async delete(keywordId: number) {
+	async delete(keywordId: number): Promise<iKeyword | iError> {
 		try {
-			const keyword = await prisma.keyword.update({
+			const response = await prisma.keyword.update({
 				where: { id: keywordId },
 				data: { isActive: false },
 			});
-			return keyword as iKeyword;
+			return response as unknown as iKeyword;
 		} catch (error) {
 			return {
 				error: "some error on delete keyword, Maybe it has already been deleted",

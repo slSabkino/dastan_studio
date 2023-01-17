@@ -1,17 +1,17 @@
-import UserServerApi from "@providers/serverApi/userServerApi";
+import UserPrismaProvider from "@providers/prismaProvider/userPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const userServerApi = new UserServerApi();
+	const userPrismaProvider = new UserPrismaProvider();
 	switch (req.method) {
 		case "PUT": {
-			const user = await userServerApi.getSome(req.body);
+			const user = await userPrismaProvider.getSome(req.body);
 			res.json(user);
 			break;
 		}
 
 		case "POST": {
-			const user = await userServerApi.create(req.body);
+			const user = await userPrismaProvider.create(req.body);
 			res.json(user);
 			break;
 		}

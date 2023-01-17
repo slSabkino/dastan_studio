@@ -8,4 +8,10 @@ export interface iNews {
 	isActive?: boolean;
 	creationDate?: Date;
 	updateDate?: Date;
+
+	// related
+	category?: any;
+	author?: any;
+	keywords?: [any];
+	comments?: [any];
 }

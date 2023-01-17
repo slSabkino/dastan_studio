@@ -1,12 +1,12 @@
-import CourseServerApi from "@providers/serverApi/courseServerApi";
+import CoursePrismaProvider from "@providers/prismaProvider/coursePrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const courseServerApi = new CourseServerApi();
+	const coursePrismaProvider = new CoursePrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const course = await courseServerApi.getOne(
+			const course = await coursePrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
 			res.json(course);
@@ -14,7 +14,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "PUT": {
-			const course = await courseServerApi.update(
+			const course = await coursePrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -23,7 +23,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const course = await courseServerApi.delete(
+			const course = await coursePrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
 			res.json(course);

@@ -1,18 +1,18 @@
-import { CourseCommntServerApi } from "@providers/serverApi/courseCommentServerApi";
+import { CourseCommentPrismaProvider } from "@providers/prismaProvider/courseCommentPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const courseCommntServerApi = new CourseCommntServerApi();
+	const courseCommentPrismaProvider = new CourseCommentPrismaProvider();
 
 	switch (req.method) {
 		case "PUT": {
-			const categories = await courseCommntServerApi.getSome(req.body);
+			const categories = await courseCommentPrismaProvider.getSome(req.body);
 			res.json(categories);
 			break;
 		}
 
 		case "POST": {
-			const category = await courseCommntServerApi.create(req.body);
+			const category = await courseCommentPrismaProvider.create(req.body);
 			res.json(category);
 			break;
 		}

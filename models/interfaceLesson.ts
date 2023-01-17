@@ -8,4 +8,9 @@ export interface iLesson {
 	isActive?: boolean;
 	creationDate?: Date;
 	updateDate?: Date;
+
+	// related
+	course?: any;
+	keywords?: [any];
+	lessonComment?: [any];
 }

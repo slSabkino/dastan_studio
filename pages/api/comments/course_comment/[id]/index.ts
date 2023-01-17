@@ -1,12 +1,12 @@
-import { CategoryServerApi } from "@providers/serverApi/categoryServerApi";
+import { CourseCommentPrismaProvider } from "@providers/prismaProvider/courseCommentPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const categoryServerApi = new CategoryServerApi();
+	const courseCommentPrismaProvider = new CourseCommentPrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const category = await categoryServerApi.getOne(
+			const category = await courseCommentPrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
 			res.json(category);
@@ -14,7 +14,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "PUT": {
-			const category = await categoryServerApi.update(
+			const category = await courseCommentPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -23,7 +23,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const category = await categoryServerApi.delete(
+			const category = await courseCommentPrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
 			res.json(category);

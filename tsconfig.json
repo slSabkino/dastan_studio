@@ -28,7 +28,7 @@
 			"@layouts/*": ["layouts/*"],
 			"@utilities/*": ["utilities/*"],
 			"@providers/*": ["providers/*"],
-			"@server/*": ["providers/serverApi/*"],
+			"@server/*": ["providers/prismaProvider/*"],
 			"@client/*": ["providers/clientApi/*"],
 			"@services/*": ["services/*"],
 			"@models/*": ["models/*"]

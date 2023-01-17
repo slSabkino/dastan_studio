@@ -9,4 +9,11 @@ export interface iCourse {
 	creationDate?: Date;
 	updateDate?: Date;
 	price?: number;
+
+	// related
+	author?: any;
+	category?: any;
+	keywords?: [any];
+	comments?: [any];
+	lessons?: [any];
 }

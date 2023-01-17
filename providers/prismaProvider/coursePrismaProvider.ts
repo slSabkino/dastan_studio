@@ -6,39 +6,39 @@ import { idExtractor } from "@utilities/idExtractor";
 
 const prisma = new PrismaClient();
 
-export default class CourseServerApi implements iCRUD<iCourse, iError> {
-	async getSome(body: any) {
+export default class CoursePrismaProvider implements iCRUD<iCourse, iError> {
+	async getSome(body: any): Promise<[iCourse] | iError> {
 		try {
-			const courses = await prisma.course.findMany({
+			const response = await prisma.course.findMany({
 				skip: body.skip,
 				take: body.take,
 				include: { keywords: true },
 			});
-			return courses as unknown as [iCourse];
+			return response as unknown as [iCourse];
 		} catch (error) {
 			return { error: "some error on get courses" };
 		}
 	}
 
-	async getOne(courseId: number) {
+	async getOne(courseId: number): Promise<iCourse | iError> {
 		try {
-			const course = await prisma.course.findUnique({
+			const response = await prisma.course.findUnique({
 				where: { id: courseId },
 				include: {
 					lessons: true,
 				},
 			});
 
-			return course as iCourse;
+			return response as unknown as iCourse;
 		} catch (error) {
 			return { error: "some error on get course" };
 		}
 	}
 
-	async create(body: any) {
+	async create(body: any): Promise<iCourse | iError> {
 		try {
 			const keywordsID = idExtractor(body.keywords as any);
-			const course = await prisma.course.create({
+			const response = await prisma.course.create({
 				data: {
 					title: body.title,
 					description: body.description,
@@ -51,16 +51,16 @@ export default class CourseServerApi implements iCRUD<iCourse, iError> {
 					},
 				},
 			});
-			return course as iCourse;
+			return response as unknown as iCourse;
 		} catch (error) {
 			return { error: "some error on create course" };
 		}
 	}
 
-	async update(courseId: number, body: any) {
+	async update(courseId: number, body: any): Promise<iCourse | iError> {
 		try {
 			const keywordsID = idExtractor(body.keywords);
-			const course = await prisma.course.update({
+			const response = await prisma.course.update({
 				where: { id: courseId },
 				data: {
 					title: body.title,
@@ -74,7 +74,7 @@ export default class CourseServerApi implements iCRUD<iCourse, iError> {
 					},
 				},
 			});
-			return course as iCourse;
+			return response as unknown as iCourse;
 		} catch (error) {
 			return {
 				error: "some error on update course, Maybe the title is repetitive",
@@ -82,13 +82,13 @@ export default class CourseServerApi implements iCRUD<iCourse, iError> {
 		}
 	}
 
-	async delete(courseId: number) {
+	async delete(courseId: number): Promise<iCourse | iError> {
 		try {
-			const course = await prisma.course.update({
+			const response = await prisma.course.update({
 				where: { id: courseId },
 				data: { isActive: false },
 			});
-			return course as iCourse;
+			return response as unknown as iCourse;
 		} catch (error) {
 			return {
 				error: "some error on delete course, Maybe it has already been deleted",

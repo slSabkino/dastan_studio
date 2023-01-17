@@ -1,18 +1,18 @@
-import { SubCategoryServerApi } from "@providers/serverApi/subCategoryServerApi";
+import { SubCategoryPrismaProvider } from "@providers/prismaProvider/subCategoryPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const subCategoryServerApi = new SubCategoryServerApi();
+	const subCategoryPrismaProvider = new SubCategoryPrismaProvider();
 
 	switch (req.method) {
 		case "PUT": {
-			const subCategories = await subCategoryServerApi.getSome(req.body);
+			const subCategories = await subCategoryPrismaProvider.getSome(req.body);
 			res.json(subCategories);
 			break;
 		}
 
 		case "POST": {
-			const subCategory = await subCategoryServerApi.create(req.body);
+			const subCategory = await subCategoryPrismaProvider.create(req.body);
 			res.json(subCategory);
 			break;
 		}

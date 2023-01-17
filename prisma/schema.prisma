@@ -34,28 +34,29 @@ model city {
 //level two
 
 model user {
-  id              Int             @id @default(autoincrement())
-  firstName       String          @db.VarChar(30)
-  lastName        String          @db.VarChar(30)
-  username        String          @unique @db.VarChar(30)
-  phone           String          @unique @db.VarChar(10)
-  email           String          @db.VarChar(70)
-  password        String          @db.VarChar(30)
-  permissionLevel Int             @default(0) @db.SmallInt
-  RegisterDate    DateTime        @default(now()) @db.Date
-  isActive        Boolean         @default(false)
-  cityId          Int?            @db.SmallInt
-  city            city?           @relation(fields: [cityId], references: [id])
-  interests       subCategory[]
-  course          course[]
-  post            post[]
-  news            news[]
-  adminMessage    adminMessage[]
-  courseComment   courseComment[]
-  postComment     postComment[]
-  newsComment     newsComment[]
-  lessonComment   lessonComment[]
-  postReport      postReport[]
+  id               Int             @id @default(autoincrement())
+  firstName        String          @db.VarChar(30)
+  lastName         String          @db.VarChar(30)
+  username         String          @unique @db.VarChar(30)
+  phone            String          @unique @db.VarChar(10)
+  email            String          @db.VarChar(70)
+  password         String          @db.VarChar(30)
+  permissionLevel  Int             @default(0) @db.SmallInt
+  RegisterDate     DateTime        @default(now()) @db.Date
+  isActive         Boolean         @default(false)
+  cityId           Int?            @db.SmallInt
+  city             city?           @relation(fields: [cityId], references: [id])
+  interests        subCategory[]
+  course           course[]
+  post             post[]
+  news             news[]
+  adminMessage     adminMessage[]
+  courseComment    courseComment[]
+  postComment      postComment[]
+  newsComment      newsComment[]
+  lessonComment    lessonComment[]
+  postReport       postReport[]
+  PurchasedCourses course[]        @relation(name: "PurchasedCourses")
 }
 
 model category {
@@ -104,6 +105,8 @@ model course {
   keywords     keyword[]
   comments     courseComment[]
   lessons      lesson[]
+  userId       Int?
+  buyers       user[]          @relation(name: "PurchasedCourses")
 }
 
 model lesson {

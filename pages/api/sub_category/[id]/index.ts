@@ -1,12 +1,12 @@
-import { SubCategoryServerApi } from "@providers/serverApi/subCategoryServerApi";
+import { SubCategoryPrismaProvider } from "@providers/prismaProvider/subCategoryPrismaProvider";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
-	const subCategoryServerApi = new SubCategoryServerApi();
+	const subCategoryPrismaProvider = new SubCategoryPrismaProvider();
 
 	switch (req.method) {
 		case "GET": {
-			const subCategory = await subCategoryServerApi.getOne(
+			const subCategory = await subCategoryPrismaProvider.getOne(
 				parseInt(req.query.id as string)
 			);
 			res.json(subCategory);
@@ -14,7 +14,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "PUT": {
-			const subCategory = await subCategoryServerApi.update(
+			const subCategory = await subCategoryPrismaProvider.update(
 				parseInt(req.query.id as string),
 				req.body
 			);
@@ -23,7 +23,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		case "DELETE": {
-			const subCategory = await subCategoryServerApi.delete(
+			const subCategory = await subCategoryPrismaProvider.delete(
 				parseInt(req.query.id as string)
 			);
 			res.json(subCategory);
