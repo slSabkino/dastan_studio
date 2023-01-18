@@ -12,6 +12,14 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 			const response = await prisma.user.findMany({
 				skip: body.skip,
 				take: body.take,
+				select: {
+					email: true,
+					lastName: true,
+					firstName: true,
+					username: true,
+					phone: true,
+					permissionLevel: true,
+				},
 			});
 			return response as unknown as [iUser];
 		} catch (error) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { deleteCookie, getCookie } from "cookies-next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { loginState, noUser, tokenAtom, userAtom } from "@providers/recoilAtoms";
@@ -12,11 +12,20 @@ export default function Account() {
 	const router = useRouter();
 
 	useEffect(() => {
-		setToken(
-			getCookie("token", { domain: "localhost", path: "/", sameSite: false })
-				? loginState.hasToken
-				: loginState.noToken
-		);
+		try {
+			const token = getCookie("token", {
+				sameSite: false,
+				httpOnly: false,
+				secure: false,
+				domain: "localhost",
+				path: "/",
+			});
+
+			setToken(token ? loginState.hasToken : loginState.noToken);
+			console.log("token : ", token);
+		} catch (error) {
+			console.log("error on load token");
+		}
 	}, []);
 
 	function signOut() {

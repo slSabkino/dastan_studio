@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
-import { serialize } from "cookie";
+import { setCookie } from "cookies-next";
 
 const prisma = new PrismaClient();
 
@@ -9,58 +9,63 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 	switch (req.method) {
 		case "GET": {
 			res.json({ cookie: req.cookies });
+			break;
 		}
 
 		case "POST": {
 			try {
-				console.log("create user : ", req.body);
 				const acount = await checkUser(req.body);
 				if (acount) {
-					res.setHeader(
-						"Set-Cookie",
-						serialize("token", acount.token, {
-							// sameSite: false,
-							maxAge: 60 * 60 * 12 * 30,
-							// domain: "localhost",
-							// path: "/",
-						})
-					);
+					setCookie("token", acount.token, {
+						req,
+						res,
+						maxAge: 60 * 60 * 12 * 30,
+						domain: "localhost",
+						path: "/",
+						sameSite: false,
+						httpOnly: false,
+						secure: false,
+					});
 					res.json({ state: true, acount: acount.user });
 				} else {
 					res.json({
 						state: false,
-						error: "not valid",
+						error: "not valid login",
 					});
 				}
 			} catch (error) {
 				res.json({ state: false, error });
 			}
+			break;
 		}
+
 		default: {
 			res.json({ log: req.method });
+			break;
 		}
 	}
 }
 
 async function checkUser({ email, password }: { email: string; password: string }) {
-	const user = await prisma.user.findFirst({
-		where: {
-			email,
-		},
-	});
-	console.log("user : ", user);
-
-	if (user && user.password === password) {
-		const token = jwt.sign(
-			{
-				firstName: user.firstName,
-				lastName: user.lastName,
-				username: user.username,
+	try {
+		const user = await prisma.user.findFirst({
+			where: {
+				email,
 			},
-			"verySecure"
-		);
-		return { token, user };
-	} else {
-		throw new Error("no user");
+		});
+		if (user && user.password === password) {
+			const token = jwt.sign(
+				{
+					userId: user.id,
+					username: user.username,
+				},
+				"verySecure"
+			);
+			return { token, user };
+		} else {
+			throw new Error("no user");
+		}
+	} catch (error) {
+		console.log("error on find user!");
 	}
 }

@@ -15,14 +15,18 @@ export default function Login() {
 	const router = useRouter();
 
 	async function onLogin(email: string, password: string) {
-		const { data } = await HTTPService.post("loginApi", { email, password });
-		console.log("logindata : ", data);
+		try {
+			const { data } = await HTTPService.post("loginApi", { email, password });
+			console.log("logindata : ", data);
 
-		if (data.state) {
-			localStorage.setItem("user", JSON.stringify(data));
-			setToken(loginState.hasToken);
-			setUser(data);
-			router.push("/");
+			if (data.state) {
+				localStorage.setItem("user", JSON.stringify(data));
+				setToken(loginState.hasToken);
+				setUser(data);
+				router.push("/");
+			}
+		} catch (error) {
+			console.log("errort : ", error);
 		}
 	}
 
