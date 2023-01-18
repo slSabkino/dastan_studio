@@ -19,5 +19,6 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		default:
 			res.json({ error: "not supported method" });
+			break;
 	}
 }
