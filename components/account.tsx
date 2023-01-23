@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { tokenState } from "@providers/recoilAtoms";
-import { useCheckAccount, useUserAccount } from "hooks/useUserAccount";
+import { useCheckAccount, useUserAccount } from "@hooks/useUserAccount";
 
 export default function Account() {
 	const { token, user } = useCheckAccount();
-	const { onSignOut } = useUserAccount();
+	const { onLogOut } = useUserAccount();
 
 	function renderState() {
 		if (token === tokenState.notoken) {
@@ -20,7 +20,7 @@ export default function Account() {
 				<div
 					className="btn"
 					onClick={() => {
-						onSignOut();
+						onLogOut();
 					}}
 				>
 					<span>sign out</span>

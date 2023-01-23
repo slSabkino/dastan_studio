@@ -1,11 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { setCookie } from "cookies-next";
-import { onUserLogin, tokenValidator } from "@utilities/userAuth";
+import { onUserLogin } from "@providers/userAuth";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case "GET": {
-			tokenValidator(req.cookies?.token as string);
 			res.json({ cookie: req.cookies });
 			break;
 		}
@@ -32,6 +31,27 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 					});
 				}
 			} catch (error) {
+				res.json({ state: false, error });
+			}
+			break;
+		}
+
+		case "DELETE": {
+			try {
+				setCookie("token", "", {
+					req,
+					res,
+					// maxAge: 0,
+					expires: new Date(0),
+					domain: "localhost",
+					path: "/",
+					sameSite: false,
+					httpOnly: false,
+					secure: false,
+				});
+				res.json({ state: true });
+			} catch (error) {
+				console.log(error);
 				res.json({ state: false, error });
 			}
 			break;

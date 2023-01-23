@@ -1,5 +1,5 @@
+import { useUserAccount } from "@hooks/useUserAccount";
 import Link from "next/link";
-import { useUserAccount } from "hooks/useUserAccount";
 
 export default function Login() {
 	const { email, password, onLogin, setEmail, setPassword } = useUserAccount();

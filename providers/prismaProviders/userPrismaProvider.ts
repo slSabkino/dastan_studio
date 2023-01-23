@@ -13,12 +13,15 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 				skip: body.skip,
 				take: body.take,
 				select: {
-					email: true,
+					id: true,
+					username: true,
 					lastName: true,
 					firstName: true,
-					username: true,
+					email: true,
 					phone: true,
 					permissionLevel: true,
+					interests: true,
+					city: { select: { title: true, provinceId: true } },
 				},
 			});
 			return response as unknown as [iUser];
@@ -32,13 +35,19 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 			const response = await prisma.user.findUnique({
 				where: { id: userId },
 				select: {
-					email: true,
+					id: true,
+					username: true,
 					lastName: true,
 					firstName: true,
-					username: true,
+					email: true,
 					phone: true,
 					permissionLevel: true,
-					interests: {},
+					interests: true,
+					city: true,
+					course: true,
+					post: true,
+					news: true,
+					PurchasedCourses: true,
 				},
 			});
 			return response as unknown as iUser;
@@ -88,6 +97,18 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 					interests: {
 						connect: interestsID,
 					},
+				},
+
+				select: {
+					id: true,
+					email: true,
+					lastName: true,
+					firstName: true,
+					username: true,
+					phone: true,
+					permissionLevel: true,
+					city: true,
+					interests: true,
 				},
 			});
 
@@ -145,6 +166,18 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 					interests: {
 						connect: interestsID,
 					},
+				},
+
+				select: {
+					id: true,
+					email: true,
+					lastName: true,
+					firstName: true,
+					username: true,
+					phone: true,
+					permissionLevel: true,
+					city: true,
+					interests: true,
 				},
 			});
 

@@ -28,7 +28,8 @@
 			"@layouts/*": ["layouts/*"],
 			"@utilities/*": ["utilities/*"],
 			"@providers/*": ["providers/*"],
-			"@models/*": ["models/*"]
+			"@models/*": ["models/*"],
+			"@hooks/*": ["hooks/*"]
 		}
 	},
 	"include": [

@@ -1,12 +1,28 @@
 import UserPrismaProvider from "@providers/prismaProviders/userPrismaProvider";
+import { onNoAccess, onBadToken, tokenValidator } from "@providers/userAuth";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	const userPrismaProvider = new UserPrismaProvider();
 	switch (req.method) {
 		case "PUT": {
-			const data = await userPrismaProvider.getSome(req.body);
-			res.json(data);
+			const token = tokenValidator(req?.cookies?.token as string);
+
+			if (token.status) {
+				const data = await userPrismaProvider.getSome(req.body);
+				console.log(req?.cookies?.token);
+				if (token.permissionLevel > 11) {
+					res.json(data);
+					break;
+				} else {
+					onNoAccess(res);
+					break;
+				}
+			} else {
+				onBadToken(req, res);
+				break;
+			}
+
 			break;
 		}
 

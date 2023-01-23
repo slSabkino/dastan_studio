@@ -1,10 +1,10 @@
-import HTTPService from "@providers/HTTPService";
 import { noUserInfo, tokenAtom, tokenState, userAtom } from "@providers/recoilAtoms";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
+import { loginCAPI, logOutCAPI } from "@providers/clientApi/userClientApi";
 
 export function useUserAccount() {
 	const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export function useUserAccount() {
 
 	async function onLogin() {
 		try {
-			const { data } = await HTTPService.post("loginApi", { email, password });
+			const data = await loginCAPI(email, password);
 			if (data.state) {
 				const decoded = jwt.decode(data.token as string) as any;
 				setUser(decoded);
@@ -28,7 +28,8 @@ export function useUserAccount() {
 		}
 	}
 
-	function onSignOut() {
+	function onLogOut() {
+		logOutCAPI();
 		deleteCookie("token");
 		setUser(noUserInfo);
 		setToken(tokenState.notoken);
@@ -41,7 +42,7 @@ export function useUserAccount() {
 		setEmail,
 		setPassword,
 		onLogin,
-		onSignOut,
+		onLogOut,
 	};
 }
 
