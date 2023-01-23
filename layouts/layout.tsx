@@ -1,15 +1,10 @@
 /* eslint-disable @next/next/no-head-element */
 
 import Head from "next/head";
-import { useRouter } from "next/router";
 import FooterMain from "./FooterMain";
 import HeaderMain from "./HeaderMain";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-	const router = useRouter();
-
-	console.log("query : ", router.pathname);
-
 	return (
 		<div className="page">
 			<Head>
@@ -22,13 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#030521" />
 			</Head>
-			<HeaderMain
-				location={{
-					base: "home",
-					category: "categoty",
-					subCategory: "subCat",
-				}}
-			/>
+			<HeaderMain />
 			<div className="base_layout">{children}</div>
 			<FooterMain />
 		</div>

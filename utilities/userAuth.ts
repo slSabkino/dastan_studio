@@ -18,6 +18,7 @@ export async function onUserLogin({ email, password }: { email: string; password
 			where: {
 				email,
 			},
+			include: { interests: true },
 		});
 
 		if (user && user.password === password) {
@@ -25,11 +26,17 @@ export async function onUserLogin({ email, password }: { email: string; password
 				{
 					userId: user.id,
 					username: user.username,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email: user.email,
+					phone: user.phone,
+					interests: user.interests,
+					cityId: user.cityId,
 					permissionLevel: user.permissionLevel,
 				},
 				process.env.TOKEN_KEY as string
 			);
-			return { token, user };
+			return token;
 		} else {
 			throw new Error("not a valid user!");
 		}

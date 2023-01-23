@@ -1,34 +1,8 @@
-import HTTPService from "@providers/HTTPService";
 import Link from "next/link";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { loginState, tokenAtom, userAtom } from "@providers/recoilAtoms";
-import { useRouter } from "next/router";
+import { useUserAccount } from "hooks/useUserAccount";
 
 export default function Login() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-
-	const [_token, setToken] = useRecoilState(tokenAtom);
-	const [_user, setUser] = useRecoilState(userAtom);
-
-	const router = useRouter();
-
-	async function onLogin(email: string, password: string) {
-		try {
-			const { data } = await HTTPService.post("loginApi", { email, password });
-			console.log("logindata : ", data);
-
-			if (data.state) {
-				localStorage.setItem("user", JSON.stringify(data));
-				setToken(loginState.hasToken);
-				setUser(data);
-				router.push("/");
-			}
-		} catch (error) {
-			console.log("errort : ", error);
-		}
-	}
+	const { email, password, onLogin, setEmail, setPassword } = useUserAccount();
 
 	return (
 		<div>
@@ -36,7 +10,7 @@ export default function Login() {
 				className="form"
 				onSubmit={(e) => {
 					e.preventDefault();
-					onLogin(email, password);
+					onLogin();
 				}}
 			>
 				<input

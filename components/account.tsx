@@ -1,56 +1,32 @@
 import Link from "next/link";
-import { deleteCookie, getCookie } from "cookies-next";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
-import { loginState, noUser, tokenAtom, userAtom } from "@providers/recoilAtoms";
+import { tokenState } from "@providers/recoilAtoms";
+import { useCheckAccount, useUserAccount } from "hooks/useUserAccount";
 
 export default function Account() {
-	const [token, setToken] = useRecoilState(tokenAtom);
-	const [_user, setUser] = useRecoilState(userAtom);
-
-	const router = useRouter();
-
-	useEffect(() => {
-		try {
-			const token = getCookie("token", {
-				sameSite: false,
-				httpOnly: false,
-				secure: false,
-				domain: "localhost",
-				path: "/",
-			});
-
-			setToken(token ? loginState.hasToken : loginState.noToken);
-			console.log("token : ", token);
-		} catch (error) {
-			console.log("error on load token");
-		}
-	}, []);
-
-	function signOut() {
-		deleteCookie("token");
-		setToken(loginState.noToken);
-		localStorage.removeItem("user");
-		setUser(noUser);
-		router.push("/");
-	}
+	const { token, user } = useCheckAccount();
+	const { onSignOut } = useUserAccount();
 
 	function renderState() {
-		if (token === loginState.hasToken) {
-			return (
-				<div className="btn" onClick={signOut}>
-					<span>sign out</span>
-				</div>
-			);
-		} else if (token === loginState.noToken) {
+		if (token === tokenState.notoken) {
 			return (
 				<Link href="/login" className="btn">
 					sign in
 				</Link>
 			);
+		} else if (token === tokenState.loading) {
+			return <div className="btn">...</div>;
 		} else {
-			<div className="btn">...</div>;
+			return (
+				<div
+					className="btn"
+					onClick={() => {
+						onSignOut();
+					}}
+				>
+					<span>sign out</span>
+					<span>{user.username}</span>
+				</div>
+			);
 		}
 	}
 

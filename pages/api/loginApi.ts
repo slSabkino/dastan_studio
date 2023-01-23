@@ -12,9 +12,9 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 
 		case "POST": {
 			try {
-				const acount = await onUserLogin(req.body);
-				if (acount) {
-					setCookie("token", acount.token, {
+				const token = await onUserLogin(req.body);
+				if (token) {
+					setCookie("token", token, {
 						req,
 						res,
 						maxAge: 60 * 60 * 12 * 30,
@@ -24,7 +24,7 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 						httpOnly: false,
 						secure: false,
 					});
-					res.json({ state: true, acount: acount.user });
+					res.json({ state: true, token });
 				} else {
 					res.json({
 						state: false,
