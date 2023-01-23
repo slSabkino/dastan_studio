@@ -1,20 +1,18 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
 import { setCookie } from "cookies-next";
-
-const prisma = new PrismaClient();
+import { onUserLogin, tokenValidator } from "@utilities/userAuth";
 
 export default async function apiHandler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case "GET": {
+			tokenValidator(req.cookies?.token as string);
 			res.json({ cookie: req.cookies });
 			break;
 		}
 
 		case "POST": {
 			try {
-				const acount = await checkUser(req.body);
+				const acount = await onUserLogin(req.body);
 				if (acount) {
 					setCookie("token", acount.token, {
 						req,
@@ -40,32 +38,8 @@ export default async function apiHandler(req: NextApiRequest, res: NextApiRespon
 		}
 
 		default: {
-			res.json({ log: req.method });
+			res.json({ error: "not supported method" });
 			break;
 		}
-	}
-}
-
-async function checkUser({ email, password }: { email: string; password: string }) {
-	try {
-		const user = await prisma.user.findFirst({
-			where: {
-				email,
-			},
-		});
-		if (user && user.password === password) {
-			const token = jwt.sign(
-				{
-					userId: user.id,
-					username: user.username,
-				},
-				"verySecure"
-			);
-			return { token, user };
-		} else {
-			throw new Error("no user");
-		}
-	} catch (error) {
-		console.log("error on find user!");
 	}
 }
