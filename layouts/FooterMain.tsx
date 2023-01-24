@@ -1,6 +1,9 @@
+import { useUserPermission } from "@hooks/useUserPermission";
 import Link from "next/link";
 
 export default function FooterMain() {
+	const { isLoggedin } = useUserPermission();
+
 	return (
 		<div className="footer_wrapper">
 			<ul className="footer">
@@ -16,9 +19,11 @@ export default function FooterMain() {
 				<li className="footer_link">
 					<Link href="/news">news</Link>
 				</li>
-				<li className="footer_link">
-					<Link href="/profile">profile</Link>
-				</li>
+				{isLoggedin ? (
+					<li className="footer_link">
+						<Link href="/profile">profile</Link>
+					</li>
+				) : null}
 			</ul>
 		</div>
 	);

@@ -22,7 +22,7 @@ export async function onUserLogin({ email, password }: { email: string; password
 			where: {
 				email,
 			},
-			include: { interests: true },
+			include: { interests: true, city: true },
 		});
 
 		if (user && user.password === password) {
@@ -37,6 +37,7 @@ export async function onUserLogin({ email, password }: { email: string; password
 					phone: user.phone,
 					interests: user.interests,
 					cityId: user.cityId,
+					city: user.city,
 				},
 				process.env.TOKEN_KEY as string
 			);
