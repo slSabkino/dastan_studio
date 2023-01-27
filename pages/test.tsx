@@ -3,31 +3,37 @@ import React, { useReducer } from "react";
 type peyload = {
 	keyName: string;
 	value: string;
+	index: number;
 };
 
-export default function Test() {
-	const [state, dispatch] = useReducer(reducer, {
-		username: "",
-		firstName: "",
-	});
+type field = {
+	name: string;
+	type: React.HTMLInputTypeAttribute;
+	value: any;
+	placeholder: string;
+};
 
-	function reducer(state: any, peyload: peyload) {
-		return { ...state, [peyload.keyName]: peyload.value };
-	}
+const filedsMap: field[] = [
+	{ name: "username", type: "text", value: "a", placeholder: "username..." },
+	{ name: "password", type: "password", value: "a", placeholder: "password ..." },
+];
 
-	function inputPerField(obj: any) {
+function inputMapper(dispacher: any, filedsMap: any): any {
+	{
+		// TODO switch case for radios and options
 		return (
 			<>
-				{Object.keys(obj).map((key, index) => {
+				{filedsMap.map((field: any, index: any) => {
 					return (
 						<input
 							key={index}
-							type="text"
-							value={obj.key}
-							placeholder={key}
+							type={field.type}
+							name={field.name}
+							value={field.value}
+							placeholder={field.placeholder}
 							onChange={(e) => {
-								dispatch({
-									keyName: key,
+								dispacher({
+									index,
 									value: e.target.value,
 								});
 							}}
@@ -37,10 +43,22 @@ export default function Test() {
 			</>
 		);
 	}
+}
+
+function reducer(state: field[], peyload: peyload) {
+	const newArr = [...state];
+	const newObj = { ...newArr[peyload.index] };
+	newObj.value = peyload.value;
+	newArr[peyload.index] = newObj;
+	return newArr;
+}
+
+export default function Test() {
+	const [state, dispatch] = useReducer(reducer, filedsMap);
 
 	return (
 		<div className="apsodi">
-			{inputPerField(state)}
+			{inputMapper(dispatch, state)}
 
 			<button
 				onClick={() => {
@@ -52,3 +70,30 @@ export default function Test() {
 		</div>
 	);
 }
+
+// function inputPerField(dispacher: any, obj: any) {
+// 	return (
+// 		<>
+// 			{Object.keys(obj).map((key, index) => {
+// 				return (
+// 					<input
+// 						key={index}
+// 						type="text"
+// 						value={obj.key}
+// 						placeholder={key}
+// 						onChange={(e) => {
+// 							dispacher({
+// 								keyName: key,
+// 								value: e.target.value,
+// 							});
+// 						}}
+// 					/>
+// 				);
+// 			})}
+// 		</>
+// 	);
+// }
+
+// function reducer(state: any, peyload: peyload) {
+// 	return { ...state, [peyload.keyName]: peyload.value };
+// }
