@@ -4,7 +4,7 @@ export interface iCategory {
 	isActive?: boolean;
 
 	// related
-	subCategory?: [any];
+	subCategory?: any[];
 }
 
 export interface iSubCategory {
@@ -15,9 +15,9 @@ export interface iSubCategory {
 
 	// related
 	category?: any;
-	course?: [any];
-	post?: [any];
-	news?: [any];
+	course?: any[];
+	post?: any[];
+	news?: any[];
 	//intersted users
-	interests?: [any];
+	interests?: any[];
 }

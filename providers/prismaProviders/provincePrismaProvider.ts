@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class ProvincePrismaProvider implements iCRUD<iProvince, iError> {
-	async getSome(body: any): Promise<[iProvince] | iError> {
+	async getSome(body: any): Promise<iProvince[] | iError> {
 		try {
 			const response = await prisma.province.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iProvince];
+			return response as unknown as iProvince[];
 		} catch (error) {
 			return { error: "some error on get province" };
 		}

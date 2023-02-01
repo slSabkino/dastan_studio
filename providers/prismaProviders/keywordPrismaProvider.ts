@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class KeywordPrismaProvider implements iCRUD<iKeyword, iError> {
-	async getSome(body: any): Promise<[iKeyword] | iError> {
+	async getSome(body: any): Promise<iKeyword[] | iError> {
 		try {
 			const response = await prisma.keyword.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iKeyword];
+			return response as unknown as iKeyword[];
 		} catch (error) {
 			return { error: "some error on get keywords" };
 		}

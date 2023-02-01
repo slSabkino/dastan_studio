@@ -4,8 +4,8 @@ export interface iKeyword {
 	isActive?: boolean;
 
 	// related
-	course?: [any];
-	lesson?: [any];
-	post?: [any];
-	news?: [any];
+	course?: any[];
+	lesson?: any[];
+	post?: any[];
+	news?: any[];
 }

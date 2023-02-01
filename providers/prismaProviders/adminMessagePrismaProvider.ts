@@ -6,14 +6,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class AdminMessagePrismaProvider implements iCRUD<iAdminMessage, iError> {
-	async getSome(body: any): Promise<iError | [iAdminMessage]> {
+	async getSome(body: any): Promise<iError | iAdminMessage[]> {
 		try {
 			const response = await prisma.adminMessage.findMany({
 				where: { userId: body.userId },
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iAdminMessage];
+			return response as unknown as iAdminMessage[];
 		} catch (error) {
 			return { error: "some error on get admin messages" };
 		}

@@ -7,7 +7,7 @@ import { idExtractor } from "@utilities/idExtractor";
 const prisma = new PrismaClient();
 
 export default class UserPrismaProvider implements iCRUD<iUser, iError> {
-	async getSome(body: any): Promise<[iUser] | iError> {
+	async getSome(body: any): Promise<iUser[] | iError> {
 		try {
 			const response = await prisma.user.findMany({
 				skip: body.skip,
@@ -24,7 +24,7 @@ export default class UserPrismaProvider implements iCRUD<iUser, iError> {
 					city: { select: { title: true, provinceId: true } },
 				},
 			});
-			return response as unknown as [iUser];
+			return response as unknown as iUser[];
 		} catch (error) {
 			return { error: "some error on get users" };
 		}

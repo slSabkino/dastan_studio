@@ -12,6 +12,6 @@ export interface iPost {
 	// related
 	category?: any;
 	author?: any;
-	keywords?: [any];
-	comments?: [any];
+	keywords?: any[];
+	comments?: any[];
 }

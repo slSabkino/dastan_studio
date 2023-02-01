@@ -13,7 +13,7 @@ export interface iCourse {
 	// related
 	author?: any;
 	category?: any;
-	keywords?: [any];
-	comments?: [any];
-	lessons?: [any];
+	keywords?: any[];
+	comments?: any[];
+	lessons?: any[];
 }

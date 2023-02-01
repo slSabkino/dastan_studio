@@ -7,14 +7,14 @@ import { idExtractor } from "@utilities/idExtractor";
 const prisma = new PrismaClient();
 
 export default class CoursePrismaProvider implements iCRUD<iCourse, iError> {
-	async getSome(body: any): Promise<[iCourse] | iError> {
+	async getSome(body: any): Promise<iCourse[] | iError> {
 		try {
 			const response = await prisma.course.findMany({
 				skip: body.skip,
 				take: body.take,
 				include: { keywords: true },
 			});
-			return response as unknown as [iCourse];
+			return response as unknown as iCourse[];
 		} catch (error) {
 			return { error: "some error on get courses" };
 		}

@@ -6,14 +6,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class CourseCommentPrismaProvider implements iCRUD<iComment, iError> {
-	async getSome(body: any): Promise<iError | [iComment]> {
+	async getSome(body: any): Promise<iError | iComment[]> {
 		try {
 			const response = await prisma.courseComment.findMany({
 				where: { subjectId: body.subjectId },
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iComment];
+			return response as unknown as iComment[];
 		} catch (error) {
 			return { error: "some error on get course comments" };
 		}

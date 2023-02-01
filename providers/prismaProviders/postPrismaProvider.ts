@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class PostPrismaProvider implements iCRUD<iPost, iError> {
-	async getSome(body: any): Promise<iError | [iPost]> {
+	async getSome(body: any): Promise<iError | iPost[]> {
 		try {
 			const response = await prisma.post.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iPost];
+			return response as unknown as iPost[];
 		} catch (error) {
 			return { error: "some error on get admin messages" };
 		}

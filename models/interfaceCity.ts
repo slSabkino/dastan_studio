@@ -4,7 +4,7 @@ export interface iProvince {
 	isActive?: boolean;
 
 	// related
-	city?: [any];
+	city?: any[];
 }
 
 export interface iCity {
@@ -15,5 +15,5 @@ export interface iCity {
 
 	// related
 	province?: any;
-	user?: [any];
+	user?: any[];
 }

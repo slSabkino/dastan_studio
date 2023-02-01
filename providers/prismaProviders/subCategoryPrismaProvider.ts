@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class SubCategoryPrismaProvider implements iCRUD<iSubCategory, iError> {
-	async getSome(body: any): Promise<[iSubCategory] | iError> {
+	async getSome(body: any): Promise<iSubCategory[] | iError> {
 		try {
 			const response = await prisma.subCategory.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iSubCategory];
+			return response as unknown as iSubCategory[];
 		} catch (error) {
 			return { error: "some error on get subCategory" };
 		}

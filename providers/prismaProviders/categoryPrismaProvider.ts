@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class CategoryPrismaProvider implements iCRUD<iCategory, iError> {
-	async getSome(body: any): Promise<iError | [iCategory]> {
+	async getSome(body: any): Promise<iError | iCategory[]> {
 		try {
 			const response = await prisma.category.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iCategory];
+			return response as unknown as iCategory[];
 		} catch (error) {
 			return { error: "some error on get category" };
 		}

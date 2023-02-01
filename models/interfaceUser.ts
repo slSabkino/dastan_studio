@@ -13,10 +13,10 @@ export interface iUser {
 
 	//related
 	city?: any;
-	interests?: [any];
-	course?: [any];
-	post?: [any];
-	news?: [any];
-	adminMessage?: [any];
-	PurchasedCourses?: [any];
+	interests?: any[];
+	course?: any[];
+	post?: any[];
+	news?: any[];
+	adminMessage?: any[];
+	PurchasedCourses?: any[];
 }

@@ -2,6 +2,7 @@
 CREATE TABLE "province" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "province_pkey" PRIMARY KEY ("id")
 );
@@ -11,6 +12,7 @@ CREATE TABLE "city" (
     "id" SMALLSERIAL NOT NULL,
     "title" VARCHAR(30) NOT NULL,
     "provinceId" SMALLINT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "city_pkey" PRIMARY KEY ("id")
 );
@@ -72,6 +74,7 @@ CREATE TABLE "course" (
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateDate" DATE,
     "price" INTEGER,
+    "userId" INTEGER,
 
     CONSTRAINT "course_pkey" PRIMARY KEY ("id")
 );
@@ -138,7 +141,7 @@ CREATE TABLE "adminMessage" (
 CREATE TABLE "courseComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "courseId" SMALLINT NOT NULL,
+    "subjectId" SMALLINT NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -150,7 +153,7 @@ CREATE TABLE "courseComment" (
 CREATE TABLE "lessonComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "lessonId" INTEGER NOT NULL,
+    "subjectId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -162,7 +165,7 @@ CREATE TABLE "lessonComment" (
 CREATE TABLE "postComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "subjectId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -174,7 +177,7 @@ CREATE TABLE "postComment" (
 CREATE TABLE "newsComment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "newsId" INTEGER NOT NULL,
+    "subjectId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -186,7 +189,7 @@ CREATE TABLE "newsComment" (
 CREATE TABLE "postReport" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "subjectId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "creationDate" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -220,6 +223,12 @@ CREATE TABLE "_keywordTonews" (
 
 -- CreateTable
 CREATE TABLE "_courseTokeyword" (
+    "A" SMALLINT NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_PurchasedCourses" (
     "A" SMALLINT NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -260,6 +269,12 @@ CREATE UNIQUE INDEX "_courseTokeyword_AB_unique" ON "_courseTokeyword"("A", "B")
 -- CreateIndex
 CREATE INDEX "_courseTokeyword_B_index" ON "_courseTokeyword"("B");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_PurchasedCourses_AB_unique" ON "_PurchasedCourses"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_PurchasedCourses_B_index" ON "_PurchasedCourses"("B");
+
 -- AddForeignKey
 ALTER TABLE "city" ADD CONSTRAINT "city_provinceId_fkey" FOREIGN KEY ("provinceId") REFERENCES "province"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -294,31 +309,31 @@ ALTER TABLE "news" ADD CONSTRAINT "news_authorId_fkey" FOREIGN KEY ("authorId") 
 ALTER TABLE "adminMessage" ADD CONSTRAINT "adminMessage_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "courseComment" ADD CONSTRAINT "courseComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "lessonComment" ADD CONSTRAINT "lessonComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postComment" ADD CONSTRAINT "postComment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postComment" ADD CONSTRAINT "postComment_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "postComment" ADD CONSTRAINT "postComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_newsId_fkey" FOREIGN KEY ("newsId") REFERENCES "news"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "news"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "newsComment" ADD CONSTRAINT "newsComment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "postReport" ADD CONSTRAINT "postReport_postId_fkey" FOREIGN KEY ("postId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "postReport" ADD CONSTRAINT "postReport_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "postReport" ADD CONSTRAINT "postReport_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -352,3 +367,9 @@ ALTER TABLE "_courseTokeyword" ADD CONSTRAINT "_courseTokeyword_A_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "_courseTokeyword" ADD CONSTRAINT "_courseTokeyword_B_fkey" FOREIGN KEY ("B") REFERENCES "keyword"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_PurchasedCourses" ADD CONSTRAINT "_PurchasedCourses_A_fkey" FOREIGN KEY ("A") REFERENCES "course"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_PurchasedCourses" ADD CONSTRAINT "_PurchasedCourses_B_fkey" FOREIGN KEY ("B") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

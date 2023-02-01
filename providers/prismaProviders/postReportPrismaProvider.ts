@@ -6,14 +6,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class PostReportPrismaProvider implements iCRUD<iReport, iError> {
-	async getSome(body: any): Promise<iError | [iReport]> {
+	async getSome(body: any): Promise<iError | iReport[]> {
 		try {
 			const response = await prisma.postReport.findMany({
 				where: { subjectId: body.subjectId },
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iReport];
+			return response as unknown as iReport[];
 		} catch (error) {
 			return { error: "some error on get post reports " };
 		}

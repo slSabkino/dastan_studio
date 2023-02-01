@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class NewsPrismaProvider implements iCRUD<iNews, iError> {
-	async getSome(body: any): Promise<iError | [iNews]> {
+	async getSome(body: any): Promise<iError | iNews[]> {
 		try {
 			const response = await prisma.news.findMany({
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iNews];
+			return response as unknown as iNews[];
 		} catch (error) {
 			return { error: "some error on get admin messages" };
 		}

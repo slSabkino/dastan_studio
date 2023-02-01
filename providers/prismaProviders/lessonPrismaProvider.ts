@@ -6,14 +6,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class LessonPrismaProvider implements iCRUD<iLesson, iError> {
-	async getSome(body: any): Promise<iError | [iLesson]> {
+	async getSome(body: any): Promise<iError | iLesson[]> {
 		try {
 			const response = await prisma.lesson.findMany({
 				where: { courseId: body.courseId },
 				skip: body.skip,
 				take: body.take,
 			});
-			return response as unknown as [iLesson];
+			return response as unknown as iLesson[];
 		} catch (error) {
 			return { error: "some error on get admin messages" };
 		}

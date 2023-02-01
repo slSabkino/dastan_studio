@@ -11,6 +11,6 @@ export interface iLesson {
 
 	// related
 	course?: any;
-	keywords?: [any];
-	lessonComment?: [any];
+	keywords?: any[];
+	lessonComment?: any[];
 }
