@@ -29,7 +29,8 @@
 			"@utilities/*": ["utilities/*"],
 			"@providers/*": ["providers/*"],
 			"@models/*": ["models/*"],
-			"@hooks/*": ["hooks/*"]
+			"@hooks/*": ["hooks/*"],
+			"@store/*": ["store/*"]
 		}
 	},
 	"include": [
@@ -40,7 +41,8 @@
 		"app/layout.tsx",
 		"pages/_app.js",
 		"layouts/HeaderMain.jsx",
-		"pages/school/courses/index.jsx"
+		"pages/school/courses/index.jsx",
+		"store/baseStore.js"
 	],
 	"exclude": ["node_modules"]
 }
