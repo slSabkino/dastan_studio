@@ -42,7 +42,7 @@
 		"pages/_app.js",
 		"layouts/HeaderMain.jsx",
 		"pages/school/courses/index.jsx",
-		"store/baseStore.js"
+		"store/baseStore.ts"
 	],
 	"exclude": ["node_modules"]
 }
